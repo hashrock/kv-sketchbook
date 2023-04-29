@@ -109,23 +109,26 @@ export default function Home(props: PageProps<Data>) {
           <div>{pageUser.name}</div>
         </a>
       </div>
-      <form
-        action={`/user/${props.params.uid}/image/${props.data?.id}`}
-        method="POST"
-        class="mt-8 flex justify-center"
-      >
-        <input type="hidden" name="_method" value="DELETE" />
-        <button
-          type="submit"
-          class="flex items-center gap-1  text-gray-500 hover:text-red-500"
-        >
-          <IconTrash
-            class="w-6 h-6"
-            alt="Remove"
-          />
-          Remove this image
-        </button>
-      </form>
+      {pageUser.id === loginUser?.id &&
+        (
+          <form
+            action={`/user/${props.params.uid}/image/${props.data?.id}`}
+            method="POST"
+            class="mt-8 flex justify-center"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button
+              type="submit"
+              class="flex items-center gap-1  text-gray-500 hover:text-red-500"
+            >
+              <IconTrash
+                class="w-6 h-6"
+                alt="Remove"
+              />
+              Remove this image
+            </button>
+          </form>
+        )}
     </>
   );
 }
