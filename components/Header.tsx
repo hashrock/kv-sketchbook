@@ -8,7 +8,7 @@ export function Header(props: { user: User | null }) {
     <>
       <div class="flex justify-between items-center">
         <a href="/">
-          <h1 class="text-4xl font-bold">KV NotePad</h1>
+          <h1 class="text-4xl font-bold">KV SketchBook</h1>
         </a>
         <a
           href="https://github.com/hashrock/kv-notepad"

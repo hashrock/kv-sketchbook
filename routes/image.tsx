@@ -9,7 +9,7 @@ import {
   listRecentlySignedInUsers,
 } from "🛠️/db.ts";
 
-import { Button, ButtonLink } from "🧱/Button.tsx";
+import { ButtonLink } from "🧱/Button.tsx";
 import { Header } from "🧱/Header.tsx";
 import { JSX } from "preact";
 import Canvas from "../islands/canvas.tsx";
@@ -47,18 +47,8 @@ export default function Home(props: PageProps<Data>) {
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={props.data?.user ?? null} />
-          <div>
+          <div class="mt-8">
             <Canvas />
-          </div>
-
-          <div>
-            <form action="/image" method="POST" encType="multipart/form-data">
-              <input type="file" name="image" />
-              <input
-                type="submit"
-                value="Upload"
-              />
-            </form>
           </div>
 
           <div>

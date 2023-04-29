@@ -22,7 +22,12 @@ export default function Canvas() {
     const canvas = canvasRef.current as HTMLCanvasElement;
     const ctx = getContext(canvas);
     ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+    const scale = canvas.width / canvas.offsetWidth;
+    const x = e.offsetX * scale;
+    const y = e.offsetY * scale;
+    ctx.moveTo(x, y);
+    ctx?.lineTo(x, y);
+    ctx?.stroke();
   };
 
   const up = (e: PointerEvent) => {
@@ -33,7 +38,10 @@ export default function Canvas() {
     if (!isDrawing) return;
     const canvas = canvasRef.current as HTMLCanvasElement;
     const ctx = getContext(canvas);
-    ctx?.lineTo(e.offsetX, e.offsetY);
+    const scale = canvas.width / canvas.offsetWidth;
+    const x = e.offsetX * scale;
+    const y = e.offsetY * scale;
+    ctx?.lineTo(x, y);
     ctx?.stroke();
   };
 
@@ -58,28 +66,33 @@ export default function Canvas() {
       body: formData,
     });
     if (res.ok) {
-      // reload
       location.reload();
     }
   };
 
   return (
     <div>
-      <h1>Canvas</h1>
-      <canvas
-        ref={canvasRef}
-        class="bg-white touch-none"
-        width={300}
-        height={300}
-        onPointerDown={down}
-        onPointerUp={up}
-        onPointerMove={move}
-        onTouchMove={prevent}
-        onPointerCancel={cancel}
-      />
-
-      <div>
-        <button onClick={save}>Save</button>
+      <div class="flex flex-col border-4 border-gray-800 rounded shadow-xl">
+        <canvas
+          ref={canvasRef}
+          class="bg-white touch-none border-gray-300 image-crisp"
+          style="image-rendering: pixelated;"
+          width={300}
+          height={300}
+          onPointerDown={down}
+          onPointerUp={up}
+          onPointerMove={move}
+          onTouchMove={prevent}
+          onPointerCancel={cancel}
+        />
+        <div>
+          <button
+            class="px-4 py-3 bg-gray-800 text-white w-full"
+            onClick={save}
+          >
+            Post
+          </button>
+        </div>
       </div>
     </div>
   );

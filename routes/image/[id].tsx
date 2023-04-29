@@ -1,13 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import {
-  deleteImage,
-  deleteMemo,
-  getImage,
-  getMemo,
-  getUserBySession,
-  updateMemo,
-} from "🛠️/db.ts";
+import { deleteImage, getImage, getUserBySession } from "🛠️/db.ts";
 import { Memo, State, User } from "🛠️/types.ts";
 
 async function remove(
