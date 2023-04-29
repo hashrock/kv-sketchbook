@@ -73,11 +73,15 @@ export default function Home(props: PageProps<Data>) {
             method="POST"
           >
             <input type="hidden" name="_method" value="DELETE" />
-            <button type="submit">
+            <button
+              type="submit"
+              class="flex items-center gap-1  text-gray-500 hover:text-red-500"
+            >
               <IconTrash
-                class="w-6 h-6 text-gray-500 hover:text-red-500"
+                class="w-6 h-6"
                 alt="Remove"
               />
+              Remove this image
             </button>
           </form>
         </div>
