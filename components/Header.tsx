@@ -1,5 +1,6 @@
 import { User } from "🛠️/types.ts";
 import { UserNameHorizontal } from "./User.tsx";
+import { CreateOrLogin } from "./Cta.tsx";
 
 const linkClass = "text-sm text-blue-500 hover:underline";
 
@@ -40,6 +41,7 @@ export function Header(props: { user: User | null }) {
             )}
         </div>
       </div>
+      <CreateOrLogin user={props.user} />
     </>
   );
 }

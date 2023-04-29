@@ -3,11 +3,11 @@ import { ButtonLink } from "🧱/Button.tsx";
 
 export function CreateOrLogin(props: { user: User | null }) {
   return (
-    <div class="mt-16 flex justify-end">
+    <div class="mt-4 flex justify-end">
       {props.user
         ? (
           <ButtonLink href="/new">
-            Create New
+            Start Drawing
           </ButtonLink>
         )
         : (

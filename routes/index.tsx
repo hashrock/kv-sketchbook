@@ -3,7 +3,6 @@ import { Head } from "$fresh/runtime.ts";
 
 import { State, TimelineImage, User } from "🛠️/types.ts";
 import { getUserBySession, listGlobalTimelineImage } from "🛠️/db.ts";
-import { CreateOrLogin } from "🧱/Cta.tsx";
 import { Breadcrumbs, Page } from "🧱/Breadcrumbs.tsx";
 
 import { Header } from "🧱/Header.tsx";
@@ -43,9 +42,6 @@ export default function Home(props: PageProps<Data>) {
       </Head>
       <Header user={props.data?.user ?? null} />
 
-      <div class="mt-4">
-        <Breadcrumbs pages={pages} />
-      </div>
       <Top {...props.data} />
     </>
   );
@@ -54,11 +50,10 @@ export default function Home(props: PageProps<Data>) {
 function Top(props: Data) {
   return (
     <>
-      <div class="">
-        <CreateOrLogin user={props.user} />
-
-        <Timeline images={props.images} />
+      <div class="mt-4">
+        <Breadcrumbs pages={pages} />
       </div>
+      <Timeline images={props.images} />
     </>
   );
 }

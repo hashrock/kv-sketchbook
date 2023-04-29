@@ -5,7 +5,6 @@ import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
-import { CreateOrLogin } from "🧱/Cta.tsx";
 import { redirect } from "🛠️/util.ts";
 import { Gallery } from "🧱/Gallery.tsx";
 import { Breadcrumbs } from "../../../components/Breadcrumbs.tsx";
@@ -78,7 +77,6 @@ export default function Home(props: PageProps<Data>) {
           ]}
         />
       </div>
-      <CreateOrLogin user={loginUser ?? null} />
 
       <Gallery
         images={props.data.images ?? []}
