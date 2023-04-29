@@ -1,19 +1,13 @@
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 
-import { Memo, State, TimelineImage, User } from "🛠️/types.ts";
-import {
-  getUserBySession,
-  listGlobalTimelineImage,
-  listMemo,
-  listRecentlySignedInUsers,
-} from "🛠️/db.ts";
+import { State, TimelineImage, User } from "🛠️/types.ts";
+import { getUserBySession, listGlobalTimelineImage } from "🛠️/db.ts";
 import { CreateOrLogin } from "🧱/Cta.tsx";
 
-import { Button, ButtonLink } from "🧱/Button.tsx";
 import { Header } from "🧱/Header.tsx";
-import { JSX } from "preact";
 import { APP_NAME } from "./const.ts";
+import { Timeline } from "🧱/Gallery.tsx";
 
 interface Data {
   user: User | null;
@@ -50,52 +44,14 @@ export default function Home(props: PageProps<Data>) {
   );
 }
 
-function LinkButton(
-  props: JSX.HTMLAttributes<HTMLAnchorElement>,
-) {
-  return (
-    <a
-      {...props}
-      class={`inline-block cursor-pointer px-3 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 ${
-        props.class ?? ""
-      }`}
-    />
-  );
-}
-
 function SignedIn(props: Data) {
   return (
     <>
       <div class="">
         <CreateOrLogin user={props.user} />
 
-        <ul class="space-y-3 mt-8">
-          {props.images.map((image) => (
-            <li class="flex flex-col items-end gap-2">
-              <a href={`/user/${image.uid}/image/${image.id}`}>
-                <img
-                  class="mt-8 bg-white rounded shadow"
-                  src={`/api/image/${image.uid}/${image.id}`}
-                />
-              </a>
-              <div>{image.createdAt}</div>
-              <div>{image.userName}</div>
-            </li>
-          ))}
-        </ul>
+        <Timeline images={props.images} />
       </div>
-    </>
-  );
-}
-
-function SignedOut() {
-  return (
-    <>
-      <p class="my-6">
-        <ButtonLink href="/auth/signin">
-          Log in with GitHub
-        </ButtonLink>
-      </p>
     </>
   );
 }

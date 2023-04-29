@@ -32,6 +32,7 @@ export interface TimelineImage {
   uid: string;
   userName: string;
   createdAt: Date;
+  avatarUrl: string;
 }
 
 export interface OauthSession {

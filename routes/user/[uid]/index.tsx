@@ -3,11 +3,11 @@ import { addImage, getUserBySession, listImage } from "🛠️/db.ts";
 import { Image, State, User } from "🛠️/types.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "../../const.ts";
 import { CreateOrLogin } from "../../../components/Cta.tsx";
 import { redirect } from "../../util.ts";
+import { Gallery } from "🧱/Gallery.tsx";
 
 type Data = SignedInData | null;
 interface SignedInData {
@@ -63,22 +63,10 @@ export default function Home(props: PageProps<Data>) {
 
           <CreateOrLogin user={props.data?.user ?? null} />
 
-          <div class="flex flex-wrap gap-8 justify-between">
-            {props.data?.images.map((image) => {
-              const url = `/api/image/${props.data?.user?.id}/${image.id}`;
-              return (
-                <a href={`/user/${props.data?.user?.id}/image/${image.id}`}>
-                  <div class="flex flex-col items-end gap-2">
-                    <img
-                      class="mt-8 bg-white rounded shadow"
-                      src={url}
-                      width="200"
-                    />
-                  </div>
-                </a>
-              );
-            })}
-          </div>
+          <Gallery
+            images={props.data?.images ?? []}
+            uid={props.data?.user?.id ?? ""}
+          />
         </div>
       </body>
     </>

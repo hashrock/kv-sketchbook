@@ -71,6 +71,7 @@ export async function addImage(uid: string, data: File) {
     id,
     uid,
     userName: user.name,
+    avatarUrl: user.avatarUrl,
     createdAt: new Date(),
   };
   await kv.set(["timeline", id], timelineImage);
