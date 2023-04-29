@@ -78,6 +78,11 @@ export default function Home(props: PageProps<Data>) {
         />
       </div>
 
+      <div class="text-4xl mt-8 flex justify-center items-center gap-x-4">
+        <img class="rounded-full w-24 h-24" src={pageUser.avatarUrl} alt="" />
+        <div>{pageUser.name}</div>
+      </div>
+
       <Gallery
         images={props.data.images ?? []}
         uid={pageUser.id ?? ""}

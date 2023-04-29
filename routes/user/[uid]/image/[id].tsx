@@ -103,7 +103,12 @@ export default function Home(props: PageProps<Data>) {
         style="image-rendering: pixelated;"
         alt=""
       />
-
+      <div class="text-xl mt-4 ">
+        <a href="../" class="flex justify-end items-center gap-x-4">
+          <img class="rounded-full w-12 h-12" src={pageUser.avatarUrl} alt="" />
+          <div>{pageUser.name}</div>
+        </a>
+      </div>
       <form
         action={`/user/${props.params.uid}/image/${props.data?.id}`}
         method="POST"
