@@ -1,8 +1,13 @@
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 
-import { Memo, State, User } from "🛠️/types.ts";
-import { getUserBySession, listMemo, listRecentlySignedInUsers } from "🛠️/db.ts";
+import { Memo, State, TimelineImage, User } from "🛠️/types.ts";
+import {
+  getUserBySession,
+  listGlobalTimelineImage,
+  listMemo,
+  listRecentlySignedInUsers,
+} from "🛠️/db.ts";
 
 import { Button, ButtonLink } from "🧱/Button.tsx";
 import { Header } from "🧱/Header.tsx";
@@ -13,7 +18,7 @@ type Data = SignedInData | null;
 interface SignedInData {
   user: User;
   users: User[];
-  memos: Memo[];
+  images: TimelineImage[];
 }
 
 export async function handler(req: Request, ctx: HandlerContext<Data, State>) {
@@ -25,9 +30,9 @@ export async function handler(req: Request, ctx: HandlerContext<Data, State>) {
   ]);
   if (!user) return ctx.render(null);
 
-  const memos = await listMemo(user.id);
+  const images = await listGlobalTimelineImage(true);
 
-  return ctx.render({ user, users, memos });
+  return ctx.render({ user, users, images });
 }
 
 export default function Home(props: PageProps<Data>) {
@@ -70,24 +75,14 @@ function SignedIn(props: SignedInData) {
         </div>
 
         <ul class="space-y-3 mt-8">
-          {props.memos.map((memo) => {
-            return (
-              <li>
-                <a
-                  class="block bg-white py-6 px-8 shadow rounded hover:shadow-lg transition duration-200 border-l-8 border-gray-400"
-                  href={`/memo/${memo?.id}`}
-                >
-                  <h2 class="text-lg">
-                    {memo?.title}
-                  </h2>
-
-                  <p class="text-sm text-gray-500">
-                    {memo?.body}
-                  </p>
-                </a>
-              </li>
-            );
-          })}
+          {props.images.map((image) => (
+            <li class="flex flex-col items-end gap-2">
+              <img
+                class="mt-8 bg-white rounded shadow"
+                src={`/user/${image.uid}/image/${image.id}`}
+              />
+            </li>
+          ))}
         </ul>
       </div>
     </>

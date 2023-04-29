@@ -63,6 +63,12 @@ export async function addImage(uid: string, data: File) {
     updatedAt: new Date(),
   };
   await kv.set(["images", uid, id], image);
+
+  const timelineImage: TimelineImage = {
+    id,
+    uid,
+  };
+  await kv.set(["timeline", id], timelineImage);
 }
 
 export async function listGlobalTimelineImage(reverse = false) {
@@ -92,7 +98,11 @@ export async function getImage(uid: string, id: string) {
 }
 
 export async function deleteImage(uid: string, id: string) {
-  await kv.delete(["images", uid, id]);
+  await kv
+    .atomic()
+    .delete(["images", uid, id])
+    .delete(["timeline", id])
+    .commit();
 }
 
 export async function addMemo(uid: string, title: string, body: string) {
