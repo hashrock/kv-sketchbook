@@ -4,7 +4,7 @@ import { deleteImage, getImage, getUserBySession } from "🛠️/db.ts";
 import { Memo, State, User } from "🛠️/types.ts";
 import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 import { Header } from "../../../../components/Header.tsx";
-import { APP_NAME } from "../../../const.ts";
+import { APP_NAME } from "🛠️/const.ts";
 
 async function remove(
   uid: string,

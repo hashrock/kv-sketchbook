@@ -4,9 +4,9 @@ import { Image, State, User } from "🛠️/types.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { Header } from "🧱/Header.tsx";
-import { APP_NAME } from "../../const.ts";
-import { CreateOrLogin } from "../../../components/Cta.tsx";
-import { redirect } from "../../util.ts";
+import { APP_NAME } from "🛠️/const.ts";
+import { CreateOrLogin } from "🧱/Cta.tsx";
+import { redirect } from "🛠️/util.ts";
 import { Gallery } from "🧱/Gallery.tsx";
 
 type Data = SignedInData | null;

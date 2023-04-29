@@ -6,7 +6,7 @@ import { getUserBySession, listGlobalTimelineImage } from "🛠️/db.ts";
 import { CreateOrLogin } from "🧱/Cta.tsx";
 
 import { Header } from "🧱/Header.tsx";
-import { APP_NAME } from "./const.ts";
+import { APP_NAME } from "🛠️/const.ts";
 import { Timeline } from "🧱/Gallery.tsx";
 
 interface Data {

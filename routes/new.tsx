@@ -5,7 +5,7 @@ import { State, User } from "🛠️/types.ts";
 
 import { Header } from "🧱/Header.tsx";
 import Canvas from "../islands/canvas.tsx";
-import { redirect } from "./util.ts";
+import { redirect } from "🛠️/util.ts";
 
 interface Data {
   user: User | null;
