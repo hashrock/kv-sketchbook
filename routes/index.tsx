@@ -12,6 +12,7 @@ import {
 import { Button, ButtonLink } from "🧱/Button.tsx";
 import { Header } from "🧱/Header.tsx";
 import { JSX } from "preact";
+import { APP_NAME } from "./const.ts";
 
 interface Data {
   user: User | null;
@@ -36,7 +37,7 @@ export default function Home(props: PageProps<Data>) {
   return (
     <>
       <Head>
-        <title>KV NotePad</title>
+        <title>{APP_NAME}</title>
       </Head>
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">

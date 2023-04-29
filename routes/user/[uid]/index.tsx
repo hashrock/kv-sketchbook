@@ -1,17 +1,18 @@
 import { Handlers } from "$fresh/server.ts";
-import { addImage, addMemo, getUserBySession, listImage } from "🛠️/db.ts";
-import { Image, Memo, State, User } from "🛠️/types.ts";
-import { HandlerContext, PageProps } from "$fresh/server.ts";
+import { addImage, getUserBySession, listImage } from "🛠️/db.ts";
+import { Image, State, User } from "🛠️/types.ts";
+import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
+import { Header } from "🧱/Header.tsx";
+import Canvas from "../../../islands/canvas.tsx";
+import { APP_NAME } from "../../const.ts";
 
 type Data = SignedInData | null;
 interface SignedInData {
   images: Image[];
   user: User | null;
 }
-import { Header } from "🧱/Header.tsx";
-import Canvas from "../../../islands/canvas.tsx";
 
 export const handler: Handlers<Data, State> = {
   async GET(req, ctx) {
@@ -61,7 +62,7 @@ export default function Home(props: PageProps<Data>) {
   return (
     <>
       <Head>
-        <title>KV NotePad</title>
+        <title>{props.data?.user?.name} | {APP_NAME}</title>
       </Head>
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">

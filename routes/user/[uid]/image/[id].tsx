@@ -4,6 +4,7 @@ import { deleteImage, getImage, getUserBySession } from "🛠️/db.ts";
 import { Memo, State, User } from "🛠️/types.ts";
 import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 import { Header } from "../../../../components/Header.tsx";
+import { APP_NAME } from "../../../const.ts";
 
 async function remove(
   uid: string,
@@ -56,7 +57,7 @@ export default function Home(props: PageProps<Data>) {
   return (
     <>
       <Head>
-        <title>KV NotePad</title>
+        <title>{props.data?.user?.name}'s work | {APP_NAME}</title>
       </Head>
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">
