@@ -10,36 +10,33 @@ export function Header(props: { user: User | null }) {
         <a href="/">
           <h1 class="text-4xl font-bold">KV SketchBook</h1>
         </a>
-        <a
-          href="https://github.com/hashrock/kv-notepad"
-          class={`${linkClass} text-right`}
-        >
-          View on GitHub
-        </a>
-      </div>
 
-      <div class="flex items-center justify-between">
-        {props.user
-          ? (
-            <>
-              <p class="text-sm text-gray-600">
-                Logged in as <UserNameHorizontal user={props.user} />
-              </p>
-              <a class={linkClass} href="/auth/signout">
-                Log out
-              </a>
-            </>
-          )
-          : (
-            <>
-              <p class="text-sm text-gray-600">
-                Anonymous user
-              </p>
-              <a class={linkClass} href="/auth/signin">
-                Log in
-              </a>
-            </>
-          )}
+        <div class="flex items-center gap-4">
+          {props.user
+            ? (
+              <>
+                <img
+                  src={props.user.avatarUrl}
+                  class="w-10 h-10 rounded-full"
+                  alt=""
+                />
+                <p class="text-sm text-gray-600">
+                  <UserNameHorizontal user={props.user} />
+                </p>
+
+                <a class={linkClass} href="/auth/signout">
+                  Log out
+                </a>
+              </>
+            )
+            : (
+              <>
+                <a class={linkClass} href="/auth/signin">
+                  Log in
+                </a>
+              </>
+            )}
+        </div>
       </div>
     </>
   );

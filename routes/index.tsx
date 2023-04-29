@@ -13,26 +13,23 @@ import { Button, ButtonLink } from "🧱/Button.tsx";
 import { Header } from "🧱/Header.tsx";
 import { JSX } from "preact";
 
-type Data = SignedInData | null;
-
-interface SignedInData {
-  user: User;
-  users: User[];
+interface Data {
+  user: User | null;
   images: TimelineImage[];
 }
 
 export async function handler(req: Request, ctx: HandlerContext<Data, State>) {
-  if (!ctx.state.session) return ctx.render(null);
-
-  const [user, users] = await Promise.all([
-    getUserBySession(ctx.state.session),
-    listRecentlySignedInUsers(),
-  ]);
-  if (!user) return ctx.render(null);
-
   const images = await listGlobalTimelineImage(true);
 
-  return ctx.render({ user, users, images });
+  if (!ctx.state.session) {
+    return ctx.render({ user: null, images });
+  }
+  const user = await getUserBySession(ctx.state.session);
+  if (!user) {
+    return ctx.render({ user: null, images });
+  }
+
+  return ctx.render({ user, images });
 }
 
 export default function Home(props: PageProps<Data>) {
@@ -44,7 +41,7 @@ export default function Home(props: PageProps<Data>) {
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={props.data?.user ?? null} />
-          {props.data ? <SignedIn {...props.data} /> : <SignedOut />}
+          <SignedIn {...props.data} />
         </div>
       </body>
     </>
@@ -64,14 +61,22 @@ function LinkButton(
   );
 }
 
-function SignedIn(props: SignedInData) {
+function SignedIn(props: Data) {
   return (
     <>
       <div class="">
         <div class="mt-16 flex justify-end">
-          <LinkButton href={`/user/${props.user.id}`}>
-            Create New
-          </LinkButton>
+          {props.user
+            ? (
+              <LinkButton href={`/user/${props.user?.id}`}>
+                Create New
+              </LinkButton>
+            )
+            : (
+              <ButtonLink href="/auth/signin">
+                Log in with GitHub
+              </ButtonLink>
+            )}
         </div>
 
         <ul class="space-y-3 mt-8">
