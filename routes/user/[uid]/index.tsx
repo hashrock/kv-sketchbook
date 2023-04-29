@@ -72,7 +72,7 @@ export default function Home(props: PageProps<Data>) {
 
           <div class="flex flex-wrap gap-8 justify-between">
             {props.data?.images.map((image) => {
-              const url = `/image/${image.id}`;
+              const url = `/user/${props.data?.user?.id}/image/${image.id}`;
               return (
                 <div class="flex flex-col items-end gap-2">
                   <img
@@ -80,7 +80,10 @@ export default function Home(props: PageProps<Data>) {
                     src={url}
                     width="200"
                   />
-                  <form action={`/image/${image.id}`} method="POST">
+                  <form
+                    action={`/user/${props.params.uid}/image/${image.id}`}
+                    method="POST"
+                  >
                     <input type="hidden" name="_method" value="DELETE" />
                     <button type="submit">
                       <IconTrash

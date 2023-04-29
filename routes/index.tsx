@@ -64,14 +64,10 @@ function SignedIn(props: SignedInData) {
     <>
       <div class="">
         <div class="mt-16 flex justify-end">
-          <LinkButton href="/new">
+          <LinkButton href={`/user/${props.user.id}`}>
             Create New
           </LinkButton>
         </div>
-
-        <p>
-          <a href={`/image/${props.user.id}`}>My Page</a>
-        </p>
 
         <ul class="space-y-3 mt-8">
           {props.memos.map((memo) => {

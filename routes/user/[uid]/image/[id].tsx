@@ -8,16 +8,12 @@ async function remove(
   id: string,
 ) {
   await deleteImage(uid, id);
-  return redirect("/image");
+  return redirect("/user/" + uid + "");
 }
 
 export const handler: Handlers<undefined, State> = {
   async GET(req, ctx) {
-    const user = await getUserBySession(ctx.state.session ?? "");
-    if (user === null) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-    const image = await getImage(user.id, ctx.params.id);
+    const image = await getImage(ctx.params.uid, ctx.params.id);
     if (image === null) {
       return new Response("Not Found", { status: 404 });
     }
@@ -34,10 +30,12 @@ export const handler: Handlers<undefined, State> = {
     if (user === null) {
       return new Response("Unauthorized", { status: 401 });
     }
+    if (user.id !== ctx.params.uid) {
+      return new Response("Unauthorized", { status: 401 });
+    }
     if (method === "DELETE") {
       return remove(user.id, ctx.params.id);
     }
-
     return new Response("Bad Request", { status: 400 });
   },
 };
