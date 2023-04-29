@@ -30,6 +30,8 @@ export interface Image {
 export interface TimelineImage {
   id: string;
   uid: string;
+  userName: string;
+  createdAt: Date;
 }
 
 export interface OauthSession {

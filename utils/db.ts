@@ -53,6 +53,9 @@ export async function deleteSession(session: string) {
 export async function addImage(uid: string, data: File) {
   const myUUID = crypto.randomUUID();
   const id = new Date().getTime() + "-" + myUUID;
+  const user = await getUserById(uid);
+  if (!user) throw new Error("user not found");
+
   const body = new Uint8Array(await data.arrayBuffer());
   const image: Image = {
     id,
@@ -67,6 +70,8 @@ export async function addImage(uid: string, data: File) {
   const timelineImage: TimelineImage = {
     id,
     uid,
+    userName: user.name,
+    createdAt: new Date(),
   };
   await kv.set(["timeline", id], timelineImage);
 }

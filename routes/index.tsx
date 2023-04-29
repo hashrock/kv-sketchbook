@@ -77,10 +77,14 @@ function SignedIn(props: SignedInData) {
         <ul class="space-y-3 mt-8">
           {props.images.map((image) => (
             <li class="flex flex-col items-end gap-2">
-              <img
-                class="mt-8 bg-white rounded shadow"
-                src={`/user/${image.uid}/image/${image.id}`}
-              />
+              <a href={`/user/${image.uid}/image/${image.id}`}>
+                <img
+                  class="mt-8 bg-white rounded shadow"
+                  src={`/api/image/${image.uid}/${image.id}`}
+                />
+              </a>
+              <div>{image.createdAt}</div>
+              <div>{image.userName}</div>
             </li>
           ))}
         </ul>

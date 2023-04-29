@@ -72,7 +72,7 @@ export default function Home(props: PageProps<Data>) {
 
           <div class="flex flex-wrap gap-8 justify-between">
             {props.data?.images.map((image) => {
-              const url = `/user/${props.data?.user?.id}/image/${image.id}`;
+              const url = `/api/image/${props.data?.user?.id}/${image.id}`;
               return (
                 <div class="flex flex-col items-end gap-2">
                   <img
