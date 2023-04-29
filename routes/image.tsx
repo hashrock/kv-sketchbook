@@ -1,6 +1,6 @@
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-
+import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 import { Image, Memo, State, User } from "🛠️/types.ts";
 import {
   getUserBySession,
@@ -51,20 +51,25 @@ export default function Home(props: PageProps<Data>) {
             <Canvas />
           </div>
 
-          <div>
+          <div class="flex flex-wrap gap-8 justify-between">
             {props.data?.images.map((image) => {
               const url = `/image/${image.id}`;
               return (
-                <div>
+                <div class="flex flex-col items-end gap-2">
                   <img
-                    class="mt-8"
+                    class="mt-8 bg-white rounded shadow"
                     src={url}
                     alt={image?.name}
                     width="200"
                   />
                   <form action={`/image/${image.id}`} method="POST">
                     <input type="hidden" name="_method" value="DELETE" />
-                    <input type="submit" value="Delete" />
+                    <button type="submit">
+                      <IconTrash
+                        class="w-6 h-6 text-gray-500 hover:text-red-500"
+                        alt="Remove"
+                      />
+                    </button>
                   </form>
                 </div>
               );
