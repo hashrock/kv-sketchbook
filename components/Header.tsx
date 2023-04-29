@@ -15,11 +15,13 @@ export function Header(props: { user: User | null }) {
           {props.user
             ? (
               <>
-                <img
-                  src={props.user.avatarUrl}
-                  class="w-10 h-10 rounded-full"
-                  alt=""
-                />
+                <a href={`/user/${props.user.id}`}>
+                  <img
+                    src={props.user.avatarUrl}
+                    class="w-10 h-10 rounded-full"
+                    alt=""
+                  />
+                </a>
                 <p class="text-sm text-gray-600">
                   <UserNameHorizontal user={props.user} />
                 </p>
