@@ -5,6 +5,7 @@ import { Memo, State, User } from "🛠️/types.ts";
 import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 import { Header } from "../../../../components/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
+import { Breadcrumbs } from "../../../../components/Breadcrumbs.tsx";
 
 async function remove(
   uid: string,
@@ -65,7 +66,22 @@ export default function Home(props: PageProps<Data>) {
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={props.data?.user ?? null} />
-
+          <div class="mt-4">
+            <Breadcrumbs
+              pages={[
+                {
+                  name: props.data?.user?.name || "",
+                  href: "../",
+                  current: false,
+                },
+                {
+                  name: "Image",
+                  href: "#",
+                  current: true,
+                },
+              ]}
+            />
+          </div>
           <img src={props.data?.imageUrl} class="w-full" alt="" />
 
           <form

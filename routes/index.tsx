@@ -4,6 +4,7 @@ import { Head } from "$fresh/runtime.ts";
 import { State, TimelineImage, User } from "🛠️/types.ts";
 import { getUserBySession, listGlobalTimelineImage } from "🛠️/db.ts";
 import { CreateOrLogin } from "🧱/Cta.tsx";
+import { Breadcrumbs, Page } from "🧱/Breadcrumbs.tsx";
 
 import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
@@ -28,6 +29,12 @@ export async function handler(req: Request, ctx: HandlerContext<Data, State>) {
   return ctx.render({ user, images });
 }
 
+const pages = [{
+  name: "Home",
+  href: "/",
+  current: true,
+}] as Page[];
+
 export default function Home(props: PageProps<Data>) {
   return (
     <>
@@ -37,14 +44,18 @@ export default function Home(props: PageProps<Data>) {
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={props.data?.user ?? null} />
-          <SignedIn {...props.data} />
+
+          <div class="mt-4">
+            <Breadcrumbs pages={pages} />
+          </div>
+          <Top {...props.data} />
         </div>
       </body>
     </>
   );
 }
 
-function SignedIn(props: Data) {
+function Top(props: Data) {
   return (
     <>
       <div class="">

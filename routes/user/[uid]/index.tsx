@@ -8,6 +8,7 @@ import { APP_NAME } from "🛠️/const.ts";
 import { CreateOrLogin } from "🧱/Cta.tsx";
 import { redirect } from "🛠️/util.ts";
 import { Gallery } from "🧱/Gallery.tsx";
+import { Breadcrumbs } from "../../../components/Breadcrumbs.tsx";
 
 type Data = SignedInData | null;
 interface SignedInData {
@@ -61,6 +62,17 @@ export default function Home(props: PageProps<Data>) {
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={props.data?.user ?? null} />
 
+          <div class="mt-4">
+            <Breadcrumbs
+              pages={[
+                {
+                  name: props.data?.user?.name || "",
+                  href: "#",
+                  current: true,
+                },
+              ]}
+            />
+          </div>
           <CreateOrLogin user={props.data?.user ?? null} />
 
           <Gallery
