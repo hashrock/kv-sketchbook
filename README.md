@@ -1,5 +1,7 @@
 # Sketch Book SNS
 
+Dead simple sketchbook app.
+
 ## Development
 
 To develop locally, you must create a GitHub OAuth application and set the
