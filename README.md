@@ -1,4 +1,4 @@
-# Classic memo pad
+# Sketch Book SNS
 
 ## Development
 
