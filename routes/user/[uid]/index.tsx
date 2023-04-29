@@ -58,29 +58,26 @@ export default function Home(props: PageProps<Data>) {
       <Head>
         <title>{props.data?.user?.name} | {APP_NAME}</title>
       </Head>
-      <body class="bg-gray-100">
-        <div class="px-4 py-8 mx-auto max-w-screen-md">
-          <Header user={props.data?.user ?? null} />
 
-          <div class="mt-4">
-            <Breadcrumbs
-              pages={[
-                {
-                  name: props.data?.user?.name || "",
-                  href: "#",
-                  current: true,
-                },
-              ]}
-            />
-          </div>
-          <CreateOrLogin user={props.data?.user ?? null} />
+      <Header user={props.data?.user ?? null} />
 
-          <Gallery
-            images={props.data?.images ?? []}
-            uid={props.data?.user?.id ?? ""}
-          />
-        </div>
-      </body>
+      <div class="mt-4">
+        <Breadcrumbs
+          pages={[
+            {
+              name: props.data?.user?.name || "",
+              href: "#",
+              current: true,
+            },
+          ]}
+        />
+      </div>
+      <CreateOrLogin user={props.data?.user ?? null} />
+
+      <Gallery
+        images={props.data?.images ?? []}
+        uid={props.data?.user?.id ?? ""}
+      />
     </>
   );
 }

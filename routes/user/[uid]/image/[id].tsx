@@ -63,45 +63,47 @@ export default function Home(props: PageProps<Data>) {
       <Head>
         <title>{props.data?.user?.name}'s work | {APP_NAME}</title>
       </Head>
-      <body class="bg-gray-100">
-        <div class="px-4 py-8 mx-auto max-w-screen-md">
-          <Header user={props.data?.user ?? null} />
-          <div class="mt-4">
-            <Breadcrumbs
-              pages={[
-                {
-                  name: props.data?.user?.name || "",
-                  href: "../",
-                  current: false,
-                },
-                {
-                  name: "Image",
-                  href: "#",
-                  current: true,
-                },
-              ]}
-            />
-          </div>
-          <img src={props.data?.imageUrl} class="w-full" alt="" />
+      <Header user={props.data?.user ?? null} />
+      <div class="mt-4">
+        <Breadcrumbs
+          pages={[
+            {
+              name: props.data?.user?.name || "",
+              href: "../",
+              current: false,
+            },
+            {
+              name: "Image",
+              href: "#",
+              current: true,
+            },
+          ]}
+        />
+      </div>
+      <img
+        src={props.data?.imageUrl}
+        class="w-full bg-white rounded my-4"
+        style="image-rendering: pixelated;"
+        alt=""
+      />
 
-          <form
-            action={`/user/${props.params.uid}/image/${props.data?.id}`}
-            method="POST"
-          >
-            <input type="hidden" name="_method" value="DELETE" />
-            <button
-              type="submit"
-              class="flex items-center gap-1  text-gray-500 hover:text-red-500"
-            >
-              <IconTrash
-                class="w-6 h-6"
-                alt="Remove"
-              />
-              Remove this image
-            </button>
-          </form>
-        </div>
-      </body>
+      <form
+        action={`/user/${props.params.uid}/image/${props.data?.id}`}
+        method="POST"
+        class="mt-8 flex justify-center"
+      >
+        <input type="hidden" name="_method" value="DELETE" />
+        <button
+          type="submit"
+          class="flex items-center gap-1  text-gray-500 hover:text-red-500"
+        >
+          <IconTrash
+            class="w-6 h-6"
+            alt="Remove"
+          />
+          Remove this image
+        </button>
+      </form>
     </>
   );
 }

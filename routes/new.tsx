@@ -7,6 +7,7 @@ import { Header } from "🧱/Header.tsx";
 import Canvas from "../islands/canvas.tsx";
 import { redirect } from "🛠️/util.ts";
 import { Breadcrumbs } from "../components/Breadcrumbs.tsx";
+import { APP_NAME } from "../utils/const.ts";
 
 interface Data {
   user: User | null;
@@ -29,28 +30,24 @@ export default function Home(props: PageProps<Data>) {
     <>
       <Head>
         <title>
-          New | KvMemo
+          New | {APP_NAME}
         </title>
       </Head>
-      <body class="bg-gray-100">
-        <div class="px-4 py-8 mx-auto max-w-screen-md">
-          <Header user={user} />
-          <div class="mt-4">
-            <Breadcrumbs
-              pages={[
-                {
-                  name: "New",
-                  href: "/new",
-                  current: true,
-                },
-              ]}
-            />
-          </div>
-          <div class="mt-8">
-            <Canvas uid={user?.id} />
-          </div>
-        </div>
-      </body>
+      <Header user={user} />
+      <div class="mt-4">
+        <Breadcrumbs
+          pages={[
+            {
+              name: "New",
+              href: "/new",
+              current: true,
+            },
+          ]}
+        />
+      </div>
+      <div class="mt-8">
+        <Canvas uid={user?.id} />
+      </div>
     </>
   );
 }

@@ -3,30 +3,32 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/_middleware.tsx";
-import * as $1 from "./routes/api/image/[uid]/[id].tsx";
-import * as $2 from "./routes/api/image/index.tsx";
-import * as $3 from "./routes/auth/oauth2callback.ts";
-import * as $4 from "./routes/auth/signin.ts";
-import * as $5 from "./routes/auth/signout.ts";
-import * as $6 from "./routes/index.tsx";
-import * as $7 from "./routes/new.tsx";
-import * as $8 from "./routes/user/[uid]/image/[id].tsx";
-import * as $9 from "./routes/user/[uid]/index.tsx";
+import * as $0 from "./routes/_app.tsx";
+import * as $1 from "./routes/_middleware.tsx";
+import * as $2 from "./routes/api/image/[uid]/[id].tsx";
+import * as $3 from "./routes/api/image/index.tsx";
+import * as $4 from "./routes/auth/oauth2callback.ts";
+import * as $5 from "./routes/auth/signin.ts";
+import * as $6 from "./routes/auth/signout.ts";
+import * as $7 from "./routes/index.tsx";
+import * as $8 from "./routes/new.tsx";
+import * as $9 from "./routes/user/[uid]/image/[id].tsx";
+import * as $10 from "./routes/user/[uid]/index.tsx";
 import * as $$0 from "./islands/canvas.tsx";
 
 const manifest = {
   routes: {
-    "./routes/_middleware.tsx": $0,
-    "./routes/api/image/[uid]/[id].tsx": $1,
-    "./routes/api/image/index.tsx": $2,
-    "./routes/auth/oauth2callback.ts": $3,
-    "./routes/auth/signin.ts": $4,
-    "./routes/auth/signout.ts": $5,
-    "./routes/index.tsx": $6,
-    "./routes/new.tsx": $7,
-    "./routes/user/[uid]/image/[id].tsx": $8,
-    "./routes/user/[uid]/index.tsx": $9,
+    "./routes/_app.tsx": $0,
+    "./routes/_middleware.tsx": $1,
+    "./routes/api/image/[uid]/[id].tsx": $2,
+    "./routes/api/image/index.tsx": $3,
+    "./routes/auth/oauth2callback.ts": $4,
+    "./routes/auth/signin.ts": $5,
+    "./routes/auth/signout.ts": $6,
+    "./routes/index.tsx": $7,
+    "./routes/new.tsx": $8,
+    "./routes/user/[uid]/image/[id].tsx": $9,
+    "./routes/user/[uid]/index.tsx": $10,
   },
   islands: {
     "./islands/canvas.tsx": $$0,
