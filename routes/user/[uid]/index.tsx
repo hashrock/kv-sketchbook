@@ -67,25 +67,15 @@ export default function Home(props: PageProps<Data>) {
             {props.data?.images.map((image) => {
               const url = `/api/image/${props.data?.user?.id}/${image.id}`;
               return (
-                <div class="flex flex-col items-end gap-2">
-                  <img
-                    class="mt-8 bg-white rounded shadow"
-                    src={url}
-                    width="200"
-                  />
-                  <form
-                    action={`/user/${props.params.uid}/image/${image.id}`}
-                    method="POST"
-                  >
-                    <input type="hidden" name="_method" value="DELETE" />
-                    <button type="submit">
-                      <IconTrash
-                        class="w-6 h-6 text-gray-500 hover:text-red-500"
-                        alt="Remove"
-                      />
-                    </button>
-                  </form>
-                </div>
+                <a href={`/user/${props.data?.user?.id}/image/${image.id}`}>
+                  <div class="flex flex-col items-end gap-2">
+                    <img
+                      class="mt-8 bg-white rounded shadow"
+                      src={url}
+                      width="200"
+                    />
+                  </div>
+                </a>
               );
             })}
           </div>

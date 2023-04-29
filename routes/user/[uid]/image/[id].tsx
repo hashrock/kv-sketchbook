@@ -17,11 +17,13 @@ async function remove(
 export const handler: Handlers<Data, State> = {
   async GET(req, ctx) {
     const imageUrl = "/api/image/" + ctx.params.uid + "/" + ctx.params.id;
-    if (!ctx.state.session) return ctx.render({ user: null, imageUrl });
+    if (!ctx.state.session) {
+      return ctx.render({ user: null, id: ctx.params.id, imageUrl });
+    }
     const user = await getUserBySession(ctx.state.session);
 
-    if (!user) return ctx.render({ user: null, imageUrl });
-    return ctx.render({ user, imageUrl });
+    if (!user) return ctx.render({ user: null, id: ctx.params.id, imageUrl });
+    return ctx.render({ user, id: ctx.params.id, imageUrl });
   },
   async POST(req, ctx) {
     const form = await req.formData();
@@ -51,6 +53,7 @@ function redirect(location = "/") {
 type Data = SignedInData | null;
 interface SignedInData {
   imageUrl: string;
+  id: string;
   user: User | null;
 }
 export default function Home(props: PageProps<Data>) {
@@ -63,7 +66,20 @@ export default function Home(props: PageProps<Data>) {
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={props.data?.user ?? null} />
 
-          <img src={props.data?.imageUrl} alt="" />
+          <img src={props.data?.imageUrl} class="w-full" alt="" />
+
+          <form
+            action={`/user/${props.params.uid}/image/${props.data?.id}`}
+            method="POST"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit">
+              <IconTrash
+                class="w-6 h-6 text-gray-500 hover:text-red-500"
+                alt="Remove"
+              />
+            </button>
+          </form>
         </div>
       </body>
     </>
