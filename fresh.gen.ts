@@ -4,32 +4,37 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_middleware.tsx";
-import * as $1 from "./routes/auth/oauth2callback.ts";
-import * as $2 from "./routes/auth/signin.ts";
-import * as $3 from "./routes/auth/signout.ts";
-import * as $4 from "./routes/image.tsx";
-import * as $5 from "./routes/image/[id].tsx";
-import * as $6 from "./routes/image/index.tsx";
-import * as $7 from "./routes/index.tsx";
-import * as $8 from "./routes/memo/[id].tsx";
-import * as $9 from "./routes/memo/index.tsx";
-import * as $10 from "./routes/new.tsx";
+import * as $1 from "./routes/api/image/index.tsx";
+import * as $2 from "./routes/auth/oauth2callback.ts";
+import * as $3 from "./routes/auth/signin.ts";
+import * as $4 from "./routes/auth/signout.ts";
+import * as $5 from "./routes/image.tsx";
+import * as $6 from "./routes/image/[id].tsx";
+import * as $7 from "./routes/image/index.tsx";
+import * as $8 from "./routes/index.tsx";
+import * as $9 from "./routes/memo/[id].tsx";
+import * as $10 from "./routes/memo/index.tsx";
+import * as $11 from "./routes/new.tsx";
+import * as $$0 from "./islands/canvas.tsx";
 
 const manifest = {
   routes: {
     "./routes/_middleware.tsx": $0,
-    "./routes/auth/oauth2callback.ts": $1,
-    "./routes/auth/signin.ts": $2,
-    "./routes/auth/signout.ts": $3,
-    "./routes/image.tsx": $4,
-    "./routes/image/[id].tsx": $5,
-    "./routes/image/index.tsx": $6,
-    "./routes/index.tsx": $7,
-    "./routes/memo/[id].tsx": $8,
-    "./routes/memo/index.tsx": $9,
-    "./routes/new.tsx": $10,
+    "./routes/api/image/index.tsx": $1,
+    "./routes/auth/oauth2callback.ts": $2,
+    "./routes/auth/signin.ts": $3,
+    "./routes/auth/signout.ts": $4,
+    "./routes/image.tsx": $5,
+    "./routes/image/[id].tsx": $6,
+    "./routes/image/index.tsx": $7,
+    "./routes/index.tsx": $8,
+    "./routes/memo/[id].tsx": $9,
+    "./routes/memo/index.tsx": $10,
+    "./routes/new.tsx": $11,
   },
-  islands: {},
+  islands: {
+    "./islands/canvas.tsx": $$0,
+  },
   baseUrl: import.meta.url,
   config,
 };
