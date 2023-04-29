@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { addImage, getUserBySession, listImage } from "🛠️/db.ts";
+import { addImage, getUserById, getUserBySession, listImage } from "🛠️/db.ts";
 import { Image, State, User } from "🛠️/types.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
@@ -10,20 +10,23 @@ import { redirect } from "🛠️/util.ts";
 import { Gallery } from "🧱/Gallery.tsx";
 import { Breadcrumbs } from "../../../components/Breadcrumbs.tsx";
 
-type Data = SignedInData | null;
-interface SignedInData {
+interface Data {
   images: Image[];
   user: User | null;
+  pageUser: User;
 }
 
 export const handler: Handlers<Data, State> = {
   async GET(req, ctx) {
     const images = await listImage(ctx.params.uid, true);
-    if (!ctx.state.session) return ctx.render({ user: null, images });
+    const pageUser = await getUserById(ctx.params.uid);
+    if (!pageUser) return new Response("Not Found", { status: 404 });
+
+    if (!ctx.state.session) return ctx.render({ user: null, images, pageUser });
     const user = await getUserBySession(ctx.state.session);
 
-    if (!user) return ctx.render({ user: null, images });
-    return ctx.render({ user, images });
+    if (!user) return ctx.render({ user: null, images, pageUser });
+    return ctx.render({ user, images, pageUser });
   },
 
   async POST(req, ctx) {
@@ -53,30 +56,33 @@ export const handler: Handlers<Data, State> = {
 };
 
 export default function Home(props: PageProps<Data>) {
+  const loginUser = props.data.user ?? null;
+  const pageUser = props.data.pageUser;
+
   return (
     <>
       <Head>
-        <title>{props.data?.user?.name} | {APP_NAME}</title>
+        <title>{pageUser.name} | {APP_NAME}</title>
       </Head>
 
-      <Header user={props.data?.user ?? null} />
+      <Header user={loginUser ?? null} />
 
       <div class="mt-4">
         <Breadcrumbs
           pages={[
             {
-              name: props.data?.user?.name || "",
+              name: pageUser.name || "",
               href: "#",
               current: true,
             },
           ]}
         />
       </div>
-      <CreateOrLogin user={props.data?.user ?? null} />
+      <CreateOrLogin user={loginUser ?? null} />
 
       <Gallery
-        images={props.data?.images ?? []}
-        uid={props.data?.user?.id ?? ""}
+        images={props.data.images ?? []}
+        uid={pageUser.id ?? ""}
       />
     </>
   );

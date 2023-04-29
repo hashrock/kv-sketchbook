@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import { deleteImage, getImage, getUserBySession } from "🛠️/db.ts";
+import { deleteImage, getImage, getUserById, getUserBySession } from "🛠️/db.ts";
 import { Memo, State, User } from "🛠️/types.ts";
 import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 import { Header } from "../../../../components/Header.tsx";
@@ -18,13 +18,27 @@ async function remove(
 export const handler: Handlers<Data, State> = {
   async GET(req, ctx) {
     const imageUrl = "/api/image/" + ctx.params.uid + "/" + ctx.params.id;
+    const pageUser = await getUserById(ctx.params.uid);
+    if (!pageUser) {
+      return new Response("Not Found", { status: 404 });
+    }
+
     if (!ctx.state.session) {
-      return ctx.render({ user: null, id: ctx.params.id, imageUrl });
+      return ctx.render({
+        loginUser: null,
+        pageUser,
+        id: ctx.params.id,
+        imageUrl,
+      });
     }
     const user = await getUserBySession(ctx.state.session);
 
-    if (!user) return ctx.render({ user: null, id: ctx.params.id, imageUrl });
-    return ctx.render({ user, id: ctx.params.id, imageUrl });
+    return ctx.render({
+      loginUser: user,
+      pageUser,
+      id: ctx.params.id,
+      imageUrl,
+    });
   },
   async POST(req, ctx) {
     const form = await req.formData();
@@ -51,24 +65,27 @@ function redirect(location = "/") {
     headers,
   });
 }
-type Data = SignedInData | null;
-interface SignedInData {
+interface Data {
   imageUrl: string;
   id: string;
-  user: User | null;
+  loginUser: User | null;
+  pageUser: User;
 }
 export default function Home(props: PageProps<Data>) {
+  const pageUser = props.data.pageUser;
+  const loginUser = props.data.loginUser;
+
   return (
     <>
       <Head>
-        <title>{props.data?.user?.name}'s work | {APP_NAME}</title>
+        <title>{pageUser.name}'s work | {APP_NAME}</title>
       </Head>
-      <Header user={props.data?.user ?? null} />
+      <Header user={loginUser ?? null} />
       <div class="mt-4">
         <Breadcrumbs
           pages={[
             {
-              name: props.data?.user?.name || "",
+              name: pageUser.name || "",
               href: "../",
               current: false,
             },
