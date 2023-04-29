@@ -33,7 +33,7 @@ export async function handler(req: Request, ctx: HandlerContext<Data, State>) {
   if (!user) return ctx.render(null);
 
   const memos = await listMemo(user.id);
-  const images = await listImage();
+  const images = await listImage(true);
 
   return ctx.render({ user, users, memos, images });
 }

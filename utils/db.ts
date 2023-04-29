@@ -51,21 +51,22 @@ export async function deleteSession(session: string) {
 }
 
 export async function addImage(name: string, data: File) {
-  const uuid = Math.random().toString(36).slice(2);
+  const myUUID = crypto.randomUUID();
+  const id = new Date().getTime() + "-" + myUUID;
   const body = new Uint8Array(await data.arrayBuffer());
   const image: Image = {
-    id: uuid,
+    id,
     name,
     data: body,
     type: data.type,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  await kv.set(["images", uuid], image);
+  await kv.set(["images", id], image);
 }
 
-export async function listImage() {
-  const iter = await kv.list<Image>({ prefix: ["images"] });
+export async function listImage(reverse: boolean = false) {
+  const iter = await kv.list<Image>({ prefix: ["images"] }, { reverse });
   const images: Image[] = [];
   for await (const item of iter) {
     images.push(item.value);
