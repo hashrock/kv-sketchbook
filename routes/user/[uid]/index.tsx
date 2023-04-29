@@ -1,11 +1,10 @@
 import { Handlers } from "$fresh/server.ts";
-import { addImage, getUserById, getUserBySession, listImage } from "🛠️/db.ts";
+import { getUserById, getUserBySession, listImage } from "🛠️/db.ts";
 import { Image, State, User } from "🛠️/types.ts";
 import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
-import { redirect } from "🛠️/util.ts";
 import { Gallery } from "🧱/Gallery.tsx";
 import { Breadcrumbs } from "../../../components/Breadcrumbs.tsx";
 
@@ -26,31 +25,6 @@ export const handler: Handlers<Data, State> = {
 
     if (!user) return ctx.render({ user: null, images, pageUser });
     return ctx.render({ user, images, pageUser });
-  },
-
-  async POST(req, ctx) {
-    const user = await getUserBySession(ctx.state.session ?? "");
-    const form = await req.formData();
-
-    const file = form.get("image") as File | null;
-
-    if (user === null) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-    if (user.id !== ctx.params.uid) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-    if (!file) {
-      return new Response("Bad Request", { status: 400 });
-    }
-    const reader = file.stream().getReader();
-    const result = await reader.read();
-    const bytes = result.value;
-    if (!bytes) {
-      return new Response("Bad Request", { status: 400 });
-    }
-    addImage(user.id, file);
-    return redirect(`/image/${user.id}`);
   },
 };
 
