@@ -4,9 +4,9 @@ import { getUserBySession } from "🛠️/db.ts";
 import { State, User } from "🛠️/types.ts";
 
 import { Header } from "🧱/Header.tsx";
-import Canvas from "../islands/canvas.tsx";
-import { Breadcrumbs } from "../components/Breadcrumbs.tsx";
-import { APP_NAME } from "../utils/const.ts";
+import Canvas from "🏝️/canvas.tsx";
+import { Breadcrumbs } from "🧱/Breadcrumbs.tsx";
+import { APP_NAME } from "🛠️/const.ts";
 
 interface Data {
   user: User;

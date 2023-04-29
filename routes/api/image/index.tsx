@@ -1,9 +1,8 @@
 import { Handlers } from "$fresh/server.ts";
 import { addImage, getUserBySession } from "🛠️/db.ts";
-import { Memo, State, User } from "🛠️/types.ts";
+import { State, User } from "🛠️/types.ts";
 
 interface Data {
-  memo: Memo;
   user: User | null;
 }
 export const handler: Handlers<Data, State> = {

@@ -10,14 +10,6 @@ export interface User {
   memos?: string[];
 }
 
-export interface Memo {
-  id: string;
-  title: string;
-  body: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export interface Image {
   id: string;
   uid: string;

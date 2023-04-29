@@ -4,7 +4,7 @@
  * synchronization between clients.
  */
 
-import { Image, Memo, OauthSession, TimelineImage, User } from "./types.ts";
+import { Image, OauthSession, TimelineImage, User } from "./types.ts";
 
 const kv = await Deno.openKv();
 
@@ -109,63 +109,4 @@ export async function deleteImage(uid: string, id: string) {
     .delete(["images", uid, id])
     .delete(["timeline", id])
     .commit();
-}
-
-export async function addMemo(uid: string, title: string, body: string) {
-  const uuid = Math.random().toString(36).slice(2);
-  const memo: Memo = {
-    id: uuid,
-    title,
-    body,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-  await kv.set(["memos", uid, uuid], memo);
-}
-
-export async function listMemo(uid: string) {
-  const iter = await kv.list<Memo>({ prefix: ["memos", uid] });
-  const memos: Memo[] = [];
-  for await (const item of iter) {
-    memos.push(item.value);
-  }
-  return memos;
-}
-
-export async function getMemo(uid: string, id: string) {
-  const res = await kv.get<Memo>(["memos", uid, id]);
-  return res.value;
-}
-
-export async function updateMemo(
-  uid: string,
-  id: string,
-  title: string,
-  body: string,
-) {
-  const memo = await getMemo(uid, id);
-  if (!memo) throw new Error("memo not found");
-  memo.title = title;
-  memo.body = body;
-  memo.updatedAt = new Date();
-  await kv.set(["memos", uid, id], memo);
-}
-
-export async function deleteMemo(uid: string, id: string) {
-  await kv.delete(["memos", uid, id]);
-}
-
-export async function listRecentlySignedInUsers(): Promise<User[]> {
-  const users = [];
-  const iter = kv.list<User>(
-    { prefix: ["users_by_last_signin"] },
-    {
-      limit: 10,
-      reverse: true,
-    },
-  );
-  for await (const { value } of iter) {
-    users.push(value);
-  }
-  return users;
 }

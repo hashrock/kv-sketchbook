@@ -6,7 +6,7 @@ import { Head } from "$fresh/runtime.ts";
 import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
 import { Gallery } from "🧱/Gallery.tsx";
-import { Breadcrumbs } from "../../../components/Breadcrumbs.tsx";
+import { Breadcrumbs } from "🧱/Breadcrumbs.tsx";
 
 interface Data {
   images: Image[];

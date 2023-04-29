@@ -1,11 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import { deleteImage, getImage, getUserById, getUserBySession } from "🛠️/db.ts";
-import { Memo, State, User } from "🛠️/types.ts";
+import { deleteImage, getUserById, getUserBySession } from "🛠️/db.ts";
+import { State, User } from "🛠️/types.ts";
 import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
-import { Header } from "../../../../components/Header.tsx";
+import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
-import { Breadcrumbs } from "../../../../components/Breadcrumbs.tsx";
+import { Breadcrumbs } from "🧱/Breadcrumbs.tsx";
 
 async function remove(
   uid: string,
