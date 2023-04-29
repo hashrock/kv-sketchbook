@@ -4,7 +4,7 @@
  * synchronization between clients.
  */
 
-import { Image, Memo, OauthSession, User } from "./types.ts";
+import { Image, Memo, OauthSession, TimelineImage, User } from "./types.ts";
 
 const kv = await Deno.openKv();
 
@@ -50,23 +50,35 @@ export async function deleteSession(session: string) {
   await kv.delete(["users_by_session", session]);
 }
 
-export async function addImage(name: string, data: File) {
+export async function addImage(uid: string, data: File) {
   const myUUID = crypto.randomUUID();
   const id = new Date().getTime() + "-" + myUUID;
   const body = new Uint8Array(await data.arrayBuffer());
   const image: Image = {
     id,
-    name,
+    uid,
     data: body,
     type: data.type,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  await kv.set(["images", id], image);
+  await kv.set(["images", uid, id], image);
 }
 
-export async function listImage(reverse: boolean = false) {
-  const iter = await kv.list<Image>({ prefix: ["images"] }, { reverse });
+export async function listGlobalTimelineImage(reverse = false) {
+  const iter = await kv.list<TimelineImage>(
+    { prefix: ["timeline"] },
+    { reverse }
+  );
+  const images: TimelineImage[] = [];
+  for await (const item of iter) {
+    images.push(item.value);
+  }
+  return images;
+}
+
+export async function listImage(uid: string, reverse = false) {
+  const iter = await kv.list<Image>({ prefix: ["images", uid] }, { reverse });
   const images: Image[] = [];
   for await (const item of iter) {
     images.push(item.value);
@@ -74,13 +86,13 @@ export async function listImage(reverse: boolean = false) {
   return images;
 }
 
-export async function getImage(id: string) {
-  const res = await kv.get<Image>(["images", id]);
+export async function getImage(uid: string, id: string) {
+  const res = await kv.get<Image>(["images", uid, id]);
   return res.value;
 }
 
-export async function deleteImage(id: string) {
-  await kv.delete(["images", id]);
+export async function deleteImage(uid: string, id: string) {
+  await kv.delete(["images", uid, id]);
 }
 
 export async function addMemo(uid: string, title: string, body: string) {

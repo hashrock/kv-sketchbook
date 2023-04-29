@@ -9,6 +9,10 @@ interface Data {
 export const handler: Handlers<Data, State> = {
   async POST(req, ctx) {
     const form = await req.formData();
+    const user = await getUserBySession(ctx.state.session ?? "");
+    if (user === null) {
+      return new Response("Unauthorized", { status: 401 });
+    }
 
     const file = form.get("image") as File | null;
 
@@ -22,7 +26,7 @@ export const handler: Handlers<Data, State> = {
       return new Response("Bad Request", { status: 400 });
     }
 
-    addImage("myimage", file);
+    addImage(user.id, file);
 
     return new Response("OK");
   },

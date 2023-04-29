@@ -68,6 +68,11 @@ function SignedIn(props: SignedInData) {
             Create New
           </LinkButton>
         </div>
+
+        <p>
+          <a href={`/image/${props.user.id}`}>My Page</a>
+        </p>
+
         <ul class="space-y-3 mt-8">
           {props.memos.map((memo) => {
             return (

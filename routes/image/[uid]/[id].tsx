@@ -4,9 +4,10 @@ import { deleteImage, getImage, getUserBySession } from "🛠️/db.ts";
 import { Memo, State, User } from "🛠️/types.ts";
 
 async function remove(
+  uid: string,
   id: string,
 ) {
-  await deleteImage(id);
+  await deleteImage(uid, id);
   return redirect("/image");
 }
 
@@ -16,7 +17,7 @@ export const handler: Handlers<undefined, State> = {
     if (user === null) {
       return new Response("Unauthorized", { status: 401 });
     }
-    const image = await getImage(ctx.params.id);
+    const image = await getImage(user.id, ctx.params.id);
     if (image === null) {
       return new Response("Not Found", { status: 404 });
     }
@@ -34,7 +35,7 @@ export const handler: Handlers<undefined, State> = {
       return new Response("Unauthorized", { status: 401 });
     }
     if (method === "DELETE") {
-      return remove(ctx.params.id);
+      return remove(user.id, ctx.params.id);
     }
 
     return new Response("Bad Request", { status: 400 });

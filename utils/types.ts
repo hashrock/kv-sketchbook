@@ -20,11 +20,16 @@ export interface Memo {
 
 export interface Image {
   id: string;
-  name: string;
+  uid: string;
   data: Uint8Array;
   type: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface TimelineImage {
+  id: string;
+  uid: string;
 }
 
 export interface OauthSession {

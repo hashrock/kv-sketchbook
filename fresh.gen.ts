@@ -9,8 +9,8 @@ import * as $2 from "./routes/auth/oauth2callback.ts";
 import * as $3 from "./routes/auth/signin.ts";
 import * as $4 from "./routes/auth/signout.ts";
 import * as $5 from "./routes/image.tsx";
-import * as $6 from "./routes/image/[id].tsx";
-import * as $7 from "./routes/image/index.tsx";
+import * as $6 from "./routes/image/[uid]/[id].tsx";
+import * as $7 from "./routes/image/[uid]/index.tsx";
 import * as $8 from "./routes/index.tsx";
 import * as $9 from "./routes/memo/[id].tsx";
 import * as $10 from "./routes/memo/index.tsx";
@@ -25,8 +25,8 @@ const manifest = {
     "./routes/auth/signin.ts": $3,
     "./routes/auth/signout.ts": $4,
     "./routes/image.tsx": $5,
-    "./routes/image/[id].tsx": $6,
-    "./routes/image/index.tsx": $7,
+    "./routes/image/[uid]/[id].tsx": $6,
+    "./routes/image/[uid]/index.tsx": $7,
     "./routes/index.tsx": $8,
     "./routes/memo/[id].tsx": $9,
     "./routes/memo/index.tsx": $10,
