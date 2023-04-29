@@ -1,7 +1,6 @@
-import { h } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 
-export default function Canvas() {
+export default function Canvas(props: { uid: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
@@ -66,7 +65,7 @@ export default function Canvas() {
       body: formData,
     });
     if (res.ok) {
-      location.reload();
+      location.href = "/user/" + props.uid + "";
     }
   };
 

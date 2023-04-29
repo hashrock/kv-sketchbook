@@ -5,8 +5,9 @@ import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 import { Header } from "🧱/Header.tsx";
-import Canvas from "../../../islands/canvas.tsx";
 import { APP_NAME } from "../../const.ts";
+import { CreateOrLogin } from "../../../components/Cta.tsx";
+import { redirect } from "../../util.ts";
 
 type Data = SignedInData | null;
 interface SignedInData {
@@ -49,14 +50,6 @@ export const handler: Handlers<Data, State> = {
     return redirect(`/image/${user.id}`);
   },
 };
-function redirect(location = "/") {
-  const headers = new Headers();
-  headers.set("location", location);
-  return new Response(null, {
-    status: 303,
-    headers,
-  });
-}
 
 export default function Home(props: PageProps<Data>) {
   return (
@@ -67,9 +60,8 @@ export default function Home(props: PageProps<Data>) {
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={props.data?.user ?? null} />
-          <div class="mt-8">
-            <Canvas />
-          </div>
+
+          <CreateOrLogin user={props.data?.user ?? null} />
 
           <div class="flex flex-wrap gap-8 justify-between">
             {props.data?.images.map((image) => {

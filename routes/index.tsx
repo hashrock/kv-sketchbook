@@ -8,6 +8,7 @@ import {
   listMemo,
   listRecentlySignedInUsers,
 } from "🛠️/db.ts";
+import { CreateOrLogin } from "🧱/Cta.tsx";
 
 import { Button, ButtonLink } from "🧱/Button.tsx";
 import { Header } from "🧱/Header.tsx";
@@ -66,19 +67,7 @@ function SignedIn(props: Data) {
   return (
     <>
       <div class="">
-        <div class="mt-16 flex justify-end">
-          {props.user
-            ? (
-              <LinkButton href={`/user/${props.user?.id}`}>
-                Create New
-              </LinkButton>
-            )
-            : (
-              <ButtonLink href="/auth/signin">
-                Log in with GitHub
-              </ButtonLink>
-            )}
-        </div>
+        <CreateOrLogin user={props.user} />
 
         <ul class="space-y-3 mt-8">
           {props.images.map((image) => (

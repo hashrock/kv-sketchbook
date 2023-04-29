@@ -4,6 +4,8 @@ import { getUserBySession } from "🛠️/db.ts";
 import { State, User } from "🛠️/types.ts";
 
 import { Header } from "🧱/Header.tsx";
+import Canvas from "../islands/canvas.tsx";
+import { redirect } from "./util.ts";
 
 interface Data {
   user: User | null;
@@ -20,6 +22,8 @@ export default function Home(props: PageProps<Data>) {
   const { user } = props.data;
   const yyyymmdd = new Date().toISOString().slice(0, 10);
 
+  if (!user) return redirect("/");
+
   return (
     <>
       <Head>
@@ -30,28 +34,9 @@ export default function Home(props: PageProps<Data>) {
       <body class="bg-gray-100">
         <div class="px-4 py-8 mx-auto max-w-screen-md">
           <Header user={user} />
-
-          <form action={`/memo`} method="POST" class="mt-16 flex flex-col">
-            <div>
-              <input
-                class="w-full  px-3 py-2  border-1 rounded"
-                type="text"
-                name="title"
-                value={yyyymmdd}
-              />
-            </div>
-            <div>
-              <textarea
-                name="body"
-                class="px-3 py-2 h-[32rem] w-full border-1 rounded"
-              />
-            </div>
-            <input
-              type="submit"
-              value="Create"
-              class="mt-1 inline-block cursor-pointer px-3 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
-            />
-          </form>
+          <div class="mt-8">
+            <Canvas uid={user?.id} />
+          </div>
         </div>
       </body>
     </>
