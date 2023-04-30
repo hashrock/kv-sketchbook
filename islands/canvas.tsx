@@ -67,6 +67,11 @@ export default function Canvas(props: { uid: string }) {
     setIsDrawing(false);
   };
   const save = async () => {
+    // window.removeEventListener(
+    //   "beforeunload",
+    //   handleBeforeUnloadEvent,
+    // );
+
     const canvas = canvasRef.current as HTMLCanvasElement;
     const promise = new Promise((resolve) => {
       canvas.toBlob(resolve, `image/png`);
@@ -84,6 +89,21 @@ export default function Canvas(props: { uid: string }) {
     }
   };
 
+  const handleBeforeUnloadEvent = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
+  // useEffect(() => {
+  //   globalThis.window.addEventListener("beforeunload", handleBeforeUnloadEvent);
+  //   return () => {
+  //     globalThis.window.removeEventListener(
+  //       "beforeunload",
+  //       handleBeforeUnloadEvent,
+  //     );
+  //   };
+  // }, []);
+
   return (
     <div>
       <div class="flex flex-col border-2 border-green-400 rounded shadow-xl">
@@ -99,12 +119,12 @@ export default function Canvas(props: { uid: string }) {
           onTouchMove={prevent}
           onPointerCancel={cancel}
         />
-        <div class="flex items-center">
+        <div class="flex items-center  bg-white">
           <div class="flex-1 flex items-center mx-4 gap-12">
-            <div class="flex items-center">
+            <div class="flex items-center gap-1">
               {pallete.map((p) => (
                 <button
-                  class={"w-8 h-8 rounded-full border-2 ring-0 " +
+                  class={"w-8 h-8 rounded-full border-2 " +
                     (p === color ? " border-blue-500" : " border-white")}
                   style={`background-color: ${p}`}
                   onClick={() => setColor(p)}
@@ -132,6 +152,7 @@ export default function Canvas(props: { uid: string }) {
           <button
             class="px-8 py-3 bg-gray-800 text-white"
             onClick={save}
+            type="button"
           >
             <IconSend class="w-6 h-6" />
             Post
@@ -152,7 +173,7 @@ function DensityUi(
     <div class="flex items-center">
       <button
         class={"border-2 " +
-          (density === 1 ? "border-green-500" : "")}
+          (density === 1 ? "border-blue-500" : "border-white")}
         onClick={() => {
           setDensity(1);
         }}
@@ -160,7 +181,8 @@ function DensityUi(
         <SvgFull />
       </button>
       <button
-        class={"border-2 " + (density === 0.5 ? "border-green-500" : "")}
+        class={"border-2 " +
+          (density === 0.5 ? "border-blue-500" : "border-white")}
         onClick={() => {
           setDensity(0.5);
         }}
@@ -168,7 +190,8 @@ function DensityUi(
         <SvgGrid3 />
       </button>
       <button
-        class={"border-2 " + (density === 0.3 ? "border-green-500" : "")}
+        class={"border-2 " +
+          (density === 0.3 ? "border-blue-500" : "border-white")}
         onClick={() => {
           setDensity(0.3);
         }}
@@ -176,7 +199,8 @@ function DensityUi(
         <SvgGrid2 />
       </button>
       <button
-        class={"border-2 " + (density === 0.1 ? "border-green-500" : "")}
+        class={"border-2 " +
+          (density === 0.1 ? "border-blue-500" : "border-white")}
         onClick={() => {
           setDensity(0.1);
         }}
@@ -189,7 +213,7 @@ function DensityUi(
 
 function SvgFull() {
   return (
-    <svg width={32} height={32} class="bg-transparent">
+    <svg width={32} height={32} class="bg-white">
       <rect width="100%" height="100%" fill="black" />
     </svg>
   );
@@ -197,7 +221,7 @@ function SvgFull() {
 
 function SvgGrid1() {
   return (
-    <svg width={32} height={32} class="bg-transparent">
+    <svg width={32} height={32} class="bg-white">
       <defs>
         <pattern
           id="grid"
@@ -221,7 +245,7 @@ function SvgGrid1() {
 
 function SvgGrid2() {
   return (
-    <svg width={32} height={32} class="bg-transparent">
+    <svg width={32} height={32} class="bg-white">
       <defs>
         <pattern
           id="grid2"
@@ -245,7 +269,7 @@ function SvgGrid2() {
 
 function SvgGrid3() {
   return (
-    <svg width={32} height={32} class="bg-transparent">
+    <svg width={32} height={32} class="bg-white">
       <defs>
         <pattern
           id="grid3"
