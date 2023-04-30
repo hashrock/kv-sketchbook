@@ -118,7 +118,7 @@ export default function Canvas(props: { uid: string }) {
         <canvas
           ref={canvasRef}
           class="bg-green-200 touch-none image-crisp"
-          style="image-rendering: pixelated;"
+          style="image-rendering: pixelated; touch-action: none;"
           width={200}
           height={200}
           onPointerDown={down}
