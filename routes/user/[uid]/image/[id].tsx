@@ -50,7 +50,7 @@ export const handler: Handlers<Data, State> = {
     if (user === null) {
       return new Response("Unauthorized", { status: 401 });
     }
-    if (!admin && user.id !== ctx.params.uid) {
+    if (!admin && (user.id !== ctx.params.uid)) {
       return new Response("Unauthorized", { status: 401 });
     }
     if (method === "DELETE") {
