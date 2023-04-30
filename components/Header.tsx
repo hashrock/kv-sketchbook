@@ -8,7 +8,7 @@ const linkClass = "text-sm text-blue-500 hover:underline";
 export function Header(props: { user: User | null; hideNew?: boolean }) {
   return (
     <>
-      <div class="flex justify-between items-center">
+      <div class="flex flex-col sm:flex-row justify-between items-center">
         <a href="/" class="hover:text-gray-700">
           <h1 class="text-4xl font-bold">KV SketchBook</h1>
         </a>

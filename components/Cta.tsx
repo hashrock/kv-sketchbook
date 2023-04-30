@@ -3,7 +3,7 @@ import { ButtonLink } from "🧱/Button.tsx";
 
 export function CreateOrLogin(props: { user: User | null; hideNew?: boolean }) {
   return (
-    <div class="mt-4 flex justify-end">
+    <div class="mt-4 flex justify-center sm:justify-end">
       {props.user
         ? (
           !props.hideNew && (

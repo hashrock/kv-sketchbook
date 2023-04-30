@@ -127,8 +127,8 @@ export default function Canvas(props: { uid: string }) {
           onTouchMove={prevent}
           onPointerCancel={cancel}
         />
-        <div class="flex items-center  bg-white">
-          <div class="flex-1 flex items-center mx-4 gap-12">
+        <div class="flex flex-col md:flex-row md:items-center bg-white">
+          <div class="flex-1 flex flex-col sm:flex-row sm:items-center mx-4 gap-x-12 my-2 gap-y-6">
             <div class="flex items-center gap-1">
               {pallete.map((p) => (
                 <button
@@ -167,7 +167,7 @@ export default function Canvas(props: { uid: string }) {
           </button>
 
           <button
-            class="px-8 py-3 bg-gray-800 hover:bg-gray-700 text-white"
+            class="flex flex-row md:flex-col justify-center px-8 py-3 bg-gray-800 hover:bg-gray-700 text-white"
             onClick={save}
             type="button"
           >
