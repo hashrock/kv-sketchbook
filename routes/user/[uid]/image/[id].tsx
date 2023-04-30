@@ -43,13 +43,14 @@ export const handler: Handlers<Data, State> = {
     });
   },
   async POST(req, ctx) {
+    const admin = await isAdmin(ctx.state.session ?? "");
     const form = await req.formData();
     const method = form.get("_method")?.toString();
     const user = await getUserBySession(ctx.state.session ?? "");
     if (user === null) {
       return new Response("Unauthorized", { status: 401 });
     }
-    if (user.id !== ctx.params.uid) {
+    if (!admin && user.id !== ctx.params.uid) {
       return new Response("Unauthorized", { status: 401 });
     }
     if (method === "DELETE") {
