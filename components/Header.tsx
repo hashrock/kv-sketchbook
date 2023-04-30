@@ -8,7 +8,7 @@ export function Header(props: { user: User | null; hideNew?: boolean }) {
   return (
     <>
       <div class="flex justify-between items-center">
-        <a href="/">
+        <a href="/" class="hover:text-gray-700">
           <h1 class="text-4xl font-bold">KV SketchBook</h1>
         </a>
 

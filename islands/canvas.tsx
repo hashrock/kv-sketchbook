@@ -1,6 +1,7 @@
 import { StateUpdater, useEffect, useRef, useState } from "preact/hooks";
 import { drawCircle, drawLine } from "🛠️/canvas.ts";
 import IconSend from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/send.tsx";
+import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
 
 export default function Canvas(props: { uid: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -94,6 +95,13 @@ export default function Canvas(props: { uid: string }) {
     e.returnValue = "";
   };
 
+  function clear() {
+    const canvas = canvasRef.current as HTMLCanvasElement;
+    const ctx = getContext(canvas);
+    ctx.fillStyle = pallete[pallete.length - 1];
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
   // useEffect(() => {
   //   globalThis.window.addEventListener("beforeunload", handleBeforeUnloadEvent);
   //   return () => {
@@ -125,7 +133,7 @@ export default function Canvas(props: { uid: string }) {
               {pallete.map((p) => (
                 <button
                   class={"w-8 h-8 rounded-full border-2 " +
-                    (p === color ? " border-blue-500" : " border-white")}
+                    (p === color ? " border-blue-500" : " border-white ")}
                   style={`background-color: ${p}`}
                   onClick={() => setColor(p)}
                 >
@@ -138,19 +146,28 @@ export default function Canvas(props: { uid: string }) {
             <div class="flex items-center">
               {penSizeList.map((p) => (
                 <button
-                  class={"inline-flex justify-center items-center rounded border-2 " +
+                  class={"inline-flex hover:text-gray-500 justify-center items-center rounded border-2 " +
                     (penSize === p ? " border-blue-500" : " border-white")}
                   onClick={() => setPenSize(p)}
                 >
                   <svg width={30} height={30} class="bg-transparent">
-                    <circle cx="50%" cy="50%" r={p} fill="black" />
+                    <circle cx="50%" cy="50%" r={p} fill="currentColor" />
                   </svg>
                 </button>
               ))}
             </div>
           </div>
+
           <button
-            class="px-8 py-3 bg-gray-800 text-white"
+            alt="Clear"
+            class="p-3 mr-2 text-gray-500 hover:text-red-500"
+            onClick={clear}
+          >
+            <IconTrash class="w-6 h-6" />
+          </button>
+
+          <button
+            class="px-8 py-3 bg-gray-800 hover:bg-gray-700 text-white"
             onClick={save}
             type="button"
           >
@@ -172,7 +189,7 @@ function DensityUi(
   return (
     <div class="flex items-center">
       <button
-        class={"border-2 " +
+        class={"border-2 hover:text-gray-500 " +
           (density === 1 ? "border-blue-500" : "border-white")}
         onClick={() => {
           setDensity(1);
@@ -181,8 +198,8 @@ function DensityUi(
         <SvgFull />
       </button>
       <button
-        class={"border-2 " +
-          (density === 0.5 ? "border-blue-500" : "border-white")}
+        class={"border-2 hover:text-gray-500 " +
+          (density === 0.5 ? "border-blue-500" : "border-white ")}
         onClick={() => {
           setDensity(0.5);
         }}
@@ -190,8 +207,8 @@ function DensityUi(
         <SvgGrid3 />
       </button>
       <button
-        class={"border-2 " +
-          (density === 0.3 ? "border-blue-500" : "border-white")}
+        class={"border-2 hover:text-gray-500 " +
+          (density === 0.3 ? "border-blue-500" : "border-white ")}
         onClick={() => {
           setDensity(0.3);
         }}
@@ -199,8 +216,8 @@ function DensityUi(
         <SvgGrid2 />
       </button>
       <button
-        class={"border-2 " +
-          (density === 0.1 ? "border-blue-500" : "border-white")}
+        class={"border-2 hover:text-gray-500 " +
+          (density === 0.1 ? "border-blue-500" : "border-white ")}
         onClick={() => {
           setDensity(0.1);
         }}
@@ -214,7 +231,7 @@ function DensityUi(
 function SvgFull() {
   return (
     <svg width={32} height={32} class="bg-white">
-      <rect width="100%" height="100%" fill="black" />
+      <rect width="100%" height="100%" fill="currentColor" />
     </svg>
   );
 }
@@ -234,7 +251,7 @@ function SvgGrid1() {
             y="0%"
             width="10%"
             height="10%"
-            fill="black"
+            fill="currentColor"
           />
         </pattern>
       </defs>
@@ -258,7 +275,7 @@ function SvgGrid2() {
             y="0%"
             width="10%"
             height="10%"
-            fill="black"
+            fill="currentColor"
           />
         </pattern>
       </defs>
@@ -282,14 +299,14 @@ function SvgGrid3() {
             y="0%"
             width="10%"
             height="10%"
-            fill="black"
+            fill="currentColor"
           />
           <rect
             x="10%"
             y="10%"
             width="10%"
             height="10%"
-            fill="black"
+            fill="currentColor"
           />
         </pattern>
       </defs>

@@ -113,7 +113,10 @@ export default function Home(props: PageProps<Data>) {
         alt=""
       />
       <div class="text-xl mt-4 ">
-        <a href="../" class="flex justify-end items-center gap-x-4">
+        <a
+          href="../"
+          class="flex justify-end items-center gap-x-4 hover:underline"
+        >
           <img class="rounded-full w-12 h-12" src={pageUser.avatarUrl} alt="" />
           <div>{pageUser.name}</div>
         </a>

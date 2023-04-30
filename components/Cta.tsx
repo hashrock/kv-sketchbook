@@ -7,13 +7,13 @@ export function CreateOrLogin(props: { user: User | null; hideNew?: boolean }) {
       {props.user
         ? (
           !props.hideNew && (
-            <ButtonLink href="/new">
+            <ButtonLink href="/new" class="hover:bg-blue-600">
               Start Drawing
             </ButtonLink>
           )
         )
         : (
-          <ButtonLink href="/auth/signin">
+          <ButtonLink href="/auth/signin" class="hover:bg-blue-600">
             Log in with GitHub
           </ButtonLink>
         )}
