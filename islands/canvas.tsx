@@ -109,14 +109,41 @@ export default function Canvas(props: { uid: string }) {
           onPointerCancel={cancel}
         />
         <div>
-          <select
-            onInput={onChangeDensity}
-          >
-            <option value="0.1">10%</option>
-            <option value="0.3">30%</option>
-            <option value="0.5">50%</option>
-            <option value="1.0">100%</option>
-          </select>
+          <div>
+            <button
+              class={"border-2 " +
+                (density === 1 ? "border-green-500" : "")}
+              onClick={() => {
+                setDensity(1);
+              }}
+            >
+              <SvgFull />
+            </button>
+            <button
+              class={"border-2 " + (density === 0.5 ? "border-green-500" : "")}
+              onClick={() => {
+                setDensity(0.5);
+              }}
+            >
+              <SvgGrid3 />
+            </button>
+            <button
+              class={"border-2 " + (density === 0.3 ? "border-green-500" : "")}
+              onClick={() => {
+                setDensity(0.3);
+              }}
+            >
+              <SvgGrid2 />
+            </button>
+            <button
+              class={"border-2 " + (density === 0.1 ? "border-green-500" : "")}
+              onClick={() => {
+                setDensity(0.1);
+              }}
+            >
+              <SvgGrid1 />
+            </button>
+          </div>
 
           <div>
             {penSizeList.map((p) => (
@@ -160,5 +187,92 @@ export default function Canvas(props: { uid: string }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function SvgFull() {
+  return (
+    <svg width={32} height={32} class="bg-transparent">
+      <rect width="100%" height="100%" fill="black" />
+    </svg>
+  );
+}
+
+function SvgGrid1() {
+  return (
+    <svg width={32} height={32} class="bg-transparent">
+      <defs>
+        <pattern
+          id="grid"
+          width="16"
+          height="16"
+          patternUnits="userSpaceOnUse"
+        >
+          <rect
+            x="0%"
+            y="0%"
+            width="10%"
+            height="10%"
+            fill="black"
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  );
+}
+
+function SvgGrid2() {
+  return (
+    <svg width={32} height={32} class="bg-transparent">
+      <defs>
+        <pattern
+          id="grid2"
+          width="8"
+          height="8"
+          patternUnits="userSpaceOnUse"
+        >
+          <rect
+            x="0%"
+            y="0%"
+            width="10%"
+            height="10%"
+            fill="black"
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid2)" />
+    </svg>
+  );
+}
+
+function SvgGrid3() {
+  return (
+    <svg width={32} height={32} class="bg-transparent">
+      <defs>
+        <pattern
+          id="grid3"
+          width="8"
+          height="8"
+          patternUnits="userSpaceOnUse"
+        >
+          <rect
+            x="0%"
+            y="0%"
+            width="10%"
+            height="10%"
+            fill="black"
+          />
+          <rect
+            x="10%"
+            y="10%"
+            width="10%"
+            height="10%"
+            fill="black"
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid3)" />
+    </svg>
   );
 }
