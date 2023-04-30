@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import { drawCircle, drawLine } from "🛠️/canvas.ts";
 
 export default function Canvas(props: { uid: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -8,6 +9,13 @@ export default function Canvas(props: { uid: string }) {
   const [density, setDensity] = useState(1);
   const [penSize, setPenSize] = useState(2);
 
+  const pallete = [
+    "#000000",
+    "#a7f3d0",
+  ];
+
+  const [color, setColor] = useState("#000000");
+
   const getContext = (canvas: HTMLCanvasElement) => {
     return canvas.getContext("2d") as CanvasRenderingContext2D;
   };
@@ -15,78 +23,9 @@ export default function Canvas(props: { uid: string }) {
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement;
     const ctx = getContext(canvas);
-    ctx.lineWidth = 5;
-    ctx.lineCap = "round";
+    ctx.fillStyle = pallete[pallete.length - 1];
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }, []);
-
-  function drawPixel(
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-  ) {
-    ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1);
-  }
-
-  function drawLine(
-    ctx: CanvasRenderingContext2D,
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    r: number,
-  ) {
-    const dx = Math.abs(x2 - x1);
-    const dy = Math.abs(y2 - y1);
-    const sx = x1 < x2 ? 1 : -1;
-    const sy = y1 < y2 ? 1 : -1;
-    let err = dx - dy;
-
-    while (true) {
-      drawCircle(ctx, x1, y1, r);
-      if (x1 === x2 && y1 === y2) break;
-      const e2 = 2 * err;
-      if (e2 > -dy) {
-        err -= dy;
-        x1 += sx;
-      }
-      if (e2 < dx) {
-        err += dx;
-        y1 += sy;
-      }
-    }
-  }
-
-  const bayerMatrix = [
-    [1, 9, 3, 11],
-    [13, 5, 15, 7],
-    [4, 12, 2, 10],
-    [16, 8, 14, 6],
-  ];
-
-  function drawCircle(
-    ctx: CanvasRenderingContext2D,
-    cx: number,
-    cy: number,
-    r: number,
-  ) {
-    for (let iy = 0; iy < 200; iy++) {
-      for (let ix = 0; ix < 200; ix++) {
-        const x = ix - 100;
-        const y = iy - 100;
-
-        if (x * x + y * y < r * r) {
-          const sx = x + cx;
-          const sy = y + cy;
-
-          //halftone
-          const bayer = bayerMatrix[sx % 4][sy % 4];
-          if (bayer / 16 > density) continue;
-
-          drawPixel(ctx, sx, sy);
-        }
-      }
-    }
-  }
 
   const down = (e: PointerEvent) => {
     (e.target as HTMLCanvasElement).setPointerCapture(e.pointerId);
@@ -96,7 +35,7 @@ export default function Canvas(props: { uid: string }) {
     const scale = canvas.width / canvas.offsetWidth;
     const x = Math.floor(e.offsetX * scale);
     const y = Math.floor(e.offsetY * scale);
-    drawCircle(ctx, x, y, penSize);
+    drawCircle(ctx, x, y, penSize, density, color);
     setLastX(x);
     setLastY(y);
   };
@@ -113,7 +52,7 @@ export default function Canvas(props: { uid: string }) {
     const x = Math.floor(e.offsetX * scale);
     const y = Math.floor(e.offsetY * scale);
 
-    drawLine(ctx, lastX, lastY, x, y, penSize);
+    drawLine(ctx, lastX, lastY, x, y, penSize, density, color);
     setLastX(x);
     setLastY(y);
   };
@@ -149,13 +88,16 @@ export default function Canvas(props: { uid: string }) {
   function onChangePenSize(e: Event) {
     setPenSize(Number((e.target as HTMLSelectElement).value));
   }
+  function onChangeColor(e: Event) {
+    setColor((e.target as HTMLSelectElement).value);
+  }
 
   return (
     <div>
       <div class="flex flex-col border-2 border-green-400 rounded shadow-xl">
         <canvas
           ref={canvasRef}
-          class="bg-green-200 touch-none border-gray-300 image-crisp"
+          class="bg-green-200 touch-none image-crisp"
           style="image-rendering: pixelated;"
           width={200}
           height={200}
@@ -188,6 +130,11 @@ export default function Canvas(props: { uid: string }) {
             <option value="10">10px</option>
             <option value="10">15px</option>
             <option value="10">20px</option>
+          </select>
+
+          <select onInput={onChangeColor}>
+            <option value="#000000">Black</option>
+            <option value="#ffffff">White</option>
           </select>
 
           <button
