@@ -7,6 +7,7 @@ import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
 import { Breadcrumbs } from "🧱/Breadcrumbs.tsx";
 import { Metas } from "🧱/Meta.tsx";
+import { isAdmin } from "🛠️/util.ts";
 
 async function remove(
   uid: string,
@@ -75,7 +76,7 @@ interface Data {
 export default function Home(props: PageProps<Data>) {
   const pageUser = props.data.pageUser;
   const loginUser = props.data.loginUser;
-
+  const admin = isAdmin(props.data.loginUser?.id || "");
   return (
     <>
       <Head>
@@ -121,7 +122,7 @@ export default function Home(props: PageProps<Data>) {
           <div>{pageUser.name}</div>
         </a>
       </div>
-      {pageUser.id === loginUser?.id &&
+      {(admin || (pageUser.id === loginUser?.id)) &&
         (
           <form
             action={`/user/${props.params.uid}/image/${props.data?.id}`}

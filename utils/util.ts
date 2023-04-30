@@ -6,3 +6,6 @@ export function redirect(location = "/") {
     headers,
   });
 }
+export function isAdmin(userId: string) {
+  return Deno.env.get("ADMIN_USER_ID") === userId;
+}

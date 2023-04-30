@@ -1,12 +1,11 @@
 import { User } from "🛠️/types.ts";
 import { UserNameHorizontal } from "./User.tsx";
 import { CreateOrLogin } from "./Cta.tsx";
+import { isAdmin } from "🛠️/util.ts";
 
 const linkClass = "text-sm text-blue-500 hover:underline";
 
 export function Header(props: { user: User | null; hideNew?: boolean }) {
-  const isAdmin = Deno.env.get("ADMIN_USER_ID") === props.user?.id;
-
   return (
     <>
       <div class="flex justify-between items-center">
@@ -27,7 +26,9 @@ export function Header(props: { user: User | null; hideNew?: boolean }) {
                 </a>
                 <p class="text-sm text-gray-600">
                   <UserNameHorizontal user={props.user} />
-                  {isAdmin && <span class="text-red-500">(Admin)</span>}
+                  {isAdmin(props.user?.id || "") && (
+                    <span class="text-red-500">(Admin)</span>
+                  )}
                 </p>
 
                 <a class={linkClass} href="/auth/signout">
