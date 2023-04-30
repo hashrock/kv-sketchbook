@@ -2,7 +2,7 @@ export function drawPixel(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  color: string
+  color: string,
 ) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, 1, 1);
@@ -16,7 +16,7 @@ export function drawLine(
   y2: number,
   r: number,
   density: number,
-  color: string
+  color: string,
 ) {
   const dx = Math.abs(x2 - x1);
   const dy = Math.abs(y2 - y1);
@@ -56,7 +56,7 @@ export function drawCircle(
   cy: number,
   r: number,
   density: number,
-  color: string
+  color: string,
 ) {
   for (let iy = 0; iy < 200; iy++) {
     for (let ix = 0; ix < 200; ix++) {

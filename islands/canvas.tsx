@@ -171,13 +171,6 @@ export default function Canvas(props: { uid: string }) {
             ))}
           </div>
 
-          {
-            /* <select onInput={onChangeColor}>
-            <option value="#000000">Black</option>
-            <option value="#ffffff">White</option>
-          </select> */
-          }
-
           <button
             class="px-4 py-3 bg-gray-800 text-white"
             onClick={save}
