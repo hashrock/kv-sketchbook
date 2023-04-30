@@ -43,10 +43,10 @@ export const handler: Handlers<Data, State> = {
     });
   },
   async POST(req, ctx) {
-    const admin = await isAdmin(ctx.state.session ?? "");
     const form = await req.formData();
     const method = form.get("_method")?.toString();
     const user = await getUserBySession(ctx.state.session ?? "");
+    const admin = await isAdmin(user?.id ?? "");
     if (user === null) {
       return new Response("Unauthorized", { status: 401 });
     }
