@@ -1,6 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { deleteImage, getImage, getUserBySession } from "🛠️/db.ts";
 import { State } from "🛠️/types.ts";
+import { isAdmin } from "🛠️/util.ts";
 async function remove(
   uid: string,
   id: string,
@@ -21,13 +22,14 @@ export const handler: Handlers<undefined, State> = {
     });
   },
   async POST(req, ctx) {
+    const admin = await isAdmin(ctx.state.session ?? "");
     const form = await req.formData();
     const method = form.get("_method")?.toString();
     const user = await getUserBySession(ctx.state.session ?? "");
     if (user === null) {
       return new Response("Unauthorized", { status: 401 });
     }
-    if (user.id !== ctx.params.uid) {
+    if (!admin && user.id !== ctx.params.uid) {
       return new Response("Unauthorized", { status: 401 });
     }
     if (method === "DELETE") {
