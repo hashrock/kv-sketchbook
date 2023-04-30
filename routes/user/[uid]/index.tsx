@@ -7,6 +7,7 @@ import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
 import { Gallery } from "🧱/Gallery.tsx";
 import { Breadcrumbs } from "🧱/Breadcrumbs.tsx";
+import { Metas } from "🧱/Meta.tsx";
 
 interface Data {
   images: Image[];
@@ -36,6 +37,13 @@ export default function Home(props: PageProps<Data>) {
     <>
       <Head>
         <title>{pageUser.name} | {APP_NAME}</title>
+        <Metas
+          name="KV Sketchbook"
+          description="A simple sketchbook app using KV"
+          image="https://hashrock-kv-sketchbook.deno.dev/screenshot.png"
+          image_alt="KV Sketchbook"
+          account="@hashedrock"
+        />
       </Head>
 
       <Header user={loginUser ?? null} />
