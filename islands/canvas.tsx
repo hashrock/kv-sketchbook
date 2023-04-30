@@ -13,6 +13,7 @@ export default function Canvas(props: { uid: string }) {
     "#000000",
     "#a7f3d0",
   ];
+  const penSizeList = [1, 2, 3, 5, 8, 10, 15];
 
   const [color, setColor] = useState("#000000");
 
@@ -117,25 +118,38 @@ export default function Canvas(props: { uid: string }) {
             <option value="1.0">100%</option>
           </select>
 
-          <select onInput={onChangePenSize}>
-            <option value="1">1px</option>
-            <option value="2">2px</option>
-            <option value="3">3px</option>
-            <option value="4">4px</option>
-            <option value="5">5px</option>
-            <option value="6">6px</option>
-            <option value="7">7px</option>
-            <option value="8">8px</option>
-            <option value="9">9px</option>
-            <option value="10">10px</option>
-            <option value="10">15px</option>
-            <option value="10">20px</option>
-          </select>
+          <div>
+            {penSizeList.map((p) => (
+              <button
+                class={"inline-flex justify-center items-center rounded border-2 " +
+                  (penSize === p ? " border-green-500" : " border-white")}
+                onClick={() => setPenSize(p)}
+              >
+                <svg width={30} height={30} class="bg-transparent">
+                  <circle cx="50%" cy="50%" r={p} fill="black" />
+                </svg>
+              </button>
+            ))}
+          </div>
 
-          <select onInput={onChangeColor}>
+          <div>
+            {pallete.map((p) => (
+              <button
+                class={"w-8 h-8 rounded-full border-2 ring-0 " +
+                  (p === color ? " border-green-500" : " border-white")}
+                style={`background-color: ${p}`}
+                onClick={() => setColor(p)}
+              >
+              </button>
+            ))}
+          </div>
+
+          {
+            /* <select onInput={onChangeColor}>
             <option value="#000000">Black</option>
             <option value="#ffffff">White</option>
-          </select>
+          </select> */
+          }
 
           <button
             class="px-4 py-3 bg-gray-800 text-white"
