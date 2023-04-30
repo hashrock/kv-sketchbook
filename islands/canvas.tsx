@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "preact/hooks";
+import { StateUpdater, useEffect, useRef, useState } from "preact/hooks";
 import { drawCircle, drawLine } from "🛠️/canvas.ts";
+import IconSend from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/send.tsx";
 
 export default function Canvas(props: { uid: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -83,16 +84,6 @@ export default function Canvas(props: { uid: string }) {
     }
   };
 
-  function onChangeDensity(e: Event) {
-    setDensity(Number((e.target as HTMLSelectElement).value));
-  }
-  function onChangePenSize(e: Event) {
-    setPenSize(Number((e.target as HTMLSelectElement).value));
-  }
-  function onChangeColor(e: Event) {
-    setColor((e.target as HTMLSelectElement).value);
-  }
-
   return (
     <div>
       <div class="flex flex-col border-2 border-green-400 rounded shadow-xl">
@@ -108,77 +99,90 @@ export default function Canvas(props: { uid: string }) {
           onTouchMove={prevent}
           onPointerCancel={cancel}
         />
-        <div>
-          <div>
-            <button
-              class={"border-2 " +
-                (density === 1 ? "border-green-500" : "")}
-              onClick={() => {
-                setDensity(1);
-              }}
-            >
-              <SvgFull />
-            </button>
-            <button
-              class={"border-2 " + (density === 0.5 ? "border-green-500" : "")}
-              onClick={() => {
-                setDensity(0.5);
-              }}
-            >
-              <SvgGrid3 />
-            </button>
-            <button
-              class={"border-2 " + (density === 0.3 ? "border-green-500" : "")}
-              onClick={() => {
-                setDensity(0.3);
-              }}
-            >
-              <SvgGrid2 />
-            </button>
-            <button
-              class={"border-2 " + (density === 0.1 ? "border-green-500" : "")}
-              onClick={() => {
-                setDensity(0.1);
-              }}
-            >
-              <SvgGrid1 />
-            </button>
-          </div>
+        <div class="flex items-center">
+          <div class="flex-1 flex items-center mx-4 gap-12">
+            <div class="flex items-center">
+              {pallete.map((p) => (
+                <button
+                  class={"w-8 h-8 rounded-full border-2 ring-0 " +
+                    (p === color ? " border-blue-500" : " border-white")}
+                  style={`background-color: ${p}`}
+                  onClick={() => setColor(p)}
+                >
+                </button>
+              ))}
+            </div>
 
-          <div>
-            {penSizeList.map((p) => (
-              <button
-                class={"inline-flex justify-center items-center rounded border-2 " +
-                  (penSize === p ? " border-green-500" : " border-white")}
-                onClick={() => setPenSize(p)}
-              >
-                <svg width={30} height={30} class="bg-transparent">
-                  <circle cx="50%" cy="50%" r={p} fill="black" />
-                </svg>
-              </button>
-            ))}
-          </div>
+            <DensityUi density={density} setDensity={setDensity} />
 
-          <div>
-            {pallete.map((p) => (
-              <button
-                class={"w-8 h-8 rounded-full border-2 ring-0 " +
-                  (p === color ? " border-green-500" : " border-white")}
-                style={`background-color: ${p}`}
-                onClick={() => setColor(p)}
-              >
-              </button>
-            ))}
+            <div class="flex items-center">
+              {penSizeList.map((p) => (
+                <button
+                  class={"inline-flex justify-center items-center rounded border-2 " +
+                    (penSize === p ? " border-blue-500" : " border-white")}
+                  onClick={() => setPenSize(p)}
+                >
+                  <svg width={30} height={30} class="bg-transparent">
+                    <circle cx="50%" cy="50%" r={p} fill="black" />
+                  </svg>
+                </button>
+              ))}
+            </div>
           </div>
-
           <button
-            class="px-4 py-3 bg-gray-800 text-white"
+            class="px-8 py-3 bg-gray-800 text-white"
             onClick={save}
           >
+            <IconSend class="w-6 h-6" />
             Post
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function DensityUi(
+  { density, setDensity }: {
+    density: number;
+    setDensity: StateUpdater<number>;
+  },
+) {
+  return (
+    <div class="flex items-center">
+      <button
+        class={"border-2 " +
+          (density === 1 ? "border-green-500" : "")}
+        onClick={() => {
+          setDensity(1);
+        }}
+      >
+        <SvgFull />
+      </button>
+      <button
+        class={"border-2 " + (density === 0.5 ? "border-green-500" : "")}
+        onClick={() => {
+          setDensity(0.5);
+        }}
+      >
+        <SvgGrid3 />
+      </button>
+      <button
+        class={"border-2 " + (density === 0.3 ? "border-green-500" : "")}
+        onClick={() => {
+          setDensity(0.3);
+        }}
+      >
+        <SvgGrid2 />
+      </button>
+      <button
+        class={"border-2 " + (density === 0.1 ? "border-green-500" : "")}
+        onClick={() => {
+          setDensity(0.1);
+        }}
+      >
+        <SvgGrid1 />
+      </button>
     </div>
   );
 }
