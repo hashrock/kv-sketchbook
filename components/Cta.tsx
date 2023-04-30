@@ -1,14 +1,16 @@
 import { User } from "../utils/types.ts";
 import { ButtonLink } from "🧱/Button.tsx";
 
-export function CreateOrLogin(props: { user: User | null }) {
+export function CreateOrLogin(props: { user: User | null; hideNew?: boolean }) {
   return (
     <div class="mt-4 flex justify-end">
       {props.user
         ? (
-          <ButtonLink href="/new">
-            Start Drawing
-          </ButtonLink>
+          !props.hideNew && (
+            <ButtonLink href="/new">
+              Start Drawing
+            </ButtonLink>
+          )
         )
         : (
           <ButtonLink href="/auth/signin">

@@ -29,7 +29,7 @@ export default function Home(props: PageProps<Data>) {
           New | {APP_NAME}
         </title>
       </Head>
-      <Header user={user} />
+      <Header user={user} hideNew />
       <div class="mt-4">
         <Breadcrumbs
           pages={[
