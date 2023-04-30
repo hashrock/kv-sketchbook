@@ -6,6 +6,7 @@ import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx"
 import { Header } from "🧱/Header.tsx";
 import { APP_NAME } from "🛠️/const.ts";
 import { Breadcrumbs } from "🧱/Breadcrumbs.tsx";
+import { Metas } from "🧱/Meta.tsx";
 
 async function remove(
   uid: string,
@@ -79,6 +80,14 @@ export default function Home(props: PageProps<Data>) {
     <>
       <Head>
         <title>{pageUser.name}'s work | {APP_NAME}</title>
+        <Metas
+          name="KV Sketchbook"
+          description="A simple sketchbook app using KV"
+          image={"https://hashrock-kv-sketchbook.deno.dev" +
+            props.data?.imageUrl}
+          image_alt="KV Sketchbook"
+          account="@hashedrock"
+        />
       </Head>
       <Header user={loginUser ?? null} />
       <div class="mt-4">
