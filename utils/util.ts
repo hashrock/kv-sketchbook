@@ -7,5 +7,6 @@ export function redirect(location = "/") {
   });
 }
 export function isAdmin(userId: string) {
-  return Deno.env.get("ADMIN_USER_ID") === userId;
+  const adminIds = Deno.env.get("ADMIN_USER_ID")?.split(",") ?? [];
+  return adminIds.includes(userId);
 }
