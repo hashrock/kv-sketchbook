@@ -10,6 +10,7 @@ export default function Canvas(props: { uid: string }) {
   const [lastY, setLastY] = useState(0);
   const [density, setDensity] = useState(1);
   const [penSize, setPenSize] = useState(2);
+  const [imageDataList, setImageDataList] = useState<Uint8ClampedArray[]>([]);
 
   const pallete = [
     "#000000",
@@ -45,6 +46,7 @@ export default function Canvas(props: { uid: string }) {
 
   const up = (e: PointerEvent) => {
     setIsDrawing(false);
+    recordImageData();
   };
 
   const move = (e: PointerEvent) => {
@@ -100,6 +102,7 @@ export default function Canvas(props: { uid: string }) {
     const ctx = getContext(canvas);
     ctx.fillStyle = pallete[pallete.length - 1];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    setImageDataList([]);
   }
 
   // useEffect(() => {
@@ -111,6 +114,38 @@ export default function Canvas(props: { uid: string }) {
   //     );
   //   };
   // }, []);
+  
+  const recordImageData = () => {
+    const canvas = canvasRef.current as HTMLCanvasElement;
+    const ctx = getContext(canvas);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const previous = imageDataList[imageDataList.length - 1];
+    if (previous !== imageData.data) setImageDataList([...imageDataList, imageData.data]);
+  };
+  
+  useEffect(() => {
+    const undo = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "z") {
+        const canvas = canvasRef.current as HTMLCanvasElement;
+        const ctx = getContext(canvas);
+        const previous = imageDataList[imageDataList.length - 1];
+        if (previous) {
+          ctx.putImageData(
+            new ImageData(previous, canvas.width, canvas.height),
+            0,
+            0,
+          );
+          setImageDataList(imageDataList.slice(0, imageDataList.length - 1));
+        } else {
+          clear();
+        }
+      }
+    };
+    self.addEventListener("keydown", undo);
+    return () => {
+      self.removeEventListener("keydown", undo);
+    };
+  }, [imageDataList]);
 
   return (
     <div>
