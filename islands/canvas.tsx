@@ -119,28 +119,30 @@ export default function Canvas(props: { uid: string }) {
     const canvas = canvasRef.current as HTMLCanvasElement;
     const ctx = getContext(canvas);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const previous = imageDataList[imageDataList.length - 1];
-    if (previous !== imageData.data) setImageDataList([...imageDataList, imageData.data]);
+    setImageDataList([...imageDataList, imageData.data]);
   };
+
+  const undo = (e: KeyboardEvent) => {
+    if (e.ctrlKey && e.key === "z") {
+      const canvas = canvasRef.current as HTMLCanvasElement;
+      const ctx = getContext(canvas);
+
+      const imageDataListCopy = imageDataList.slice(0, -1);
+
+      const lastImageData = imageDataListCopy[imageDataListCopy.length - 1];
+      if (lastImageData) {
+        const imageData = new ImageData(lastImageData, canvas.width, canvas.height);
+        ctx.putImageData(imageData, 0, 0);
+
+        setImageDataList(imageDataListCopy);
+      } else {
+        clear();
+      }
+    }
+  };
+
   
   useEffect(() => {
-    const undo = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "z") {
-        const canvas = canvasRef.current as HTMLCanvasElement;
-        const ctx = getContext(canvas);
-        const previous = imageDataList[imageDataList.length - 1];
-        if (previous) {
-          ctx.putImageData(
-            new ImageData(previous, canvas.width, canvas.height),
-            0,
-            0,
-          );
-          setImageDataList(imageDataList.slice(0, imageDataList.length - 1));
-        } else {
-          clear();
-        }
-      }
-    };
     self.addEventListener("keydown", undo);
     return () => {
       self.removeEventListener("keydown", undo);
