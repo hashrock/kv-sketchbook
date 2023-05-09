@@ -98,6 +98,7 @@ export default function Canvas(props: { uid: string }) {
   };
 
   function clear() {
+    if (!imageDataList.length) return;
     const canvas = canvasRef.current as HTMLCanvasElement;
     const ctx = getContext(canvas);
     ctx.fillStyle = pallete[pallete.length - 1];
