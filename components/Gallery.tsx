@@ -25,7 +25,7 @@ export function Timeline(props: { images: TimelineImage[] }) {
   return (
     <div class="sm:flex sm:flex-row sm:flex-wrap gap-8 justify-between">
       {props.images.map((image) => (
-        <li class="flex flex-col sm:items-end gap-2">
+        <li class="flex flex-col sm:items-center gap-2">
           <a href={`/user/${image.uid}/image/${image.id}`}>
             <img
               width={220}
@@ -34,10 +34,10 @@ export function Timeline(props: { images: TimelineImage[] }) {
             />
           </a>
           <div>
-            <a class="text-sm hover:underline" href={`/user/${image.uid}`}>
+            <a class="text-md text-align-center font-medium hover:underline" href={`/user/${image.uid}`}>
               <img
                 src={image.avatarUrl}
-                class="w-5 h-5 rounded-full inline-block mr-1"
+                class="w-9 h-9 rounded-full inline-block mr-1"
                 alt=""
               />
               {image.userName}
