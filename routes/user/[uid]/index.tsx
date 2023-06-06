@@ -16,7 +16,7 @@ interface Data {
 }
 
 export const handler: Handlers<Data, State> = {
-  async GET(req, ctx) {
+  async GET(_req, ctx) {
     const images = await listImage(ctx.params.uid, true);
     const pageUser = await getUserById(ctx.params.uid);
     if (!pageUser) return new Response("Not Found", { status: 404 });
