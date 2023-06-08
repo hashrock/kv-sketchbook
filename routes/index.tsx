@@ -15,7 +15,7 @@ interface Data {
   images: TimelineImage[];
 }
 
-export async function handler(req: Request, ctx: HandlerContext<Data, State>) {
+export async function handler(_req: Request, ctx: HandlerContext<Data, State>) {
   const images = await listGlobalTimelineImage(true);
 
   if (!ctx.state.session) {

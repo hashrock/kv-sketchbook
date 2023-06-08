@@ -115,7 +115,7 @@ export default function Canvas(props: { uid: string }) {
   //     );
   //   };
   // }, []);
-  
+
   const recordImageData = () => {
     const canvas = canvasRef.current as HTMLCanvasElement;
     const ctx = getContext(canvas);
@@ -132,7 +132,11 @@ export default function Canvas(props: { uid: string }) {
 
       const lastImageData = imageDataListCopy[imageDataListCopy.length - 1];
       if (lastImageData) {
-        const imageData = new ImageData(lastImageData, canvas.width, canvas.height);
+        const imageData = new ImageData(
+          lastImageData,
+          canvas.width,
+          canvas.height,
+        );
         ctx.putImageData(imageData, 0, 0);
 
         setImageDataList(imageDataListCopy);
@@ -142,7 +146,6 @@ export default function Canvas(props: { uid: string }) {
     }
   };
 
-  
   useEffect(() => {
     self.addEventListener("keydown", undo);
     return () => {

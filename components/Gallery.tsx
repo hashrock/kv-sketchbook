@@ -34,7 +34,10 @@ export function Timeline(props: { images: TimelineImage[] }) {
             />
           </a>
           <div>
-            <a class="text-md text-align-center font-medium hover:underline" href={`/user/${image.uid}`}>
+            <a
+              class="text-md text-align-center font-medium hover:underline"
+              href={`/user/${image.uid}`}
+            >
               <img
                 src={image.avatarUrl}
                 class="w-9 h-9 rounded-full inline-block mr-1"

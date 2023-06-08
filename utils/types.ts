@@ -1,5 +1,5 @@
 export interface State {
-  session: string | undefined;
+  session: string | null;
 }
 
 export interface User {
@@ -25,9 +25,4 @@ export interface TimelineImage {
   userName: string;
   createdAt: Date;
   avatarUrl: string;
-}
-
-export interface OauthSession {
-  state: string;
-  codeVerifier: string;
 }

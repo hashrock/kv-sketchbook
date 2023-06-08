@@ -12,7 +12,7 @@ interface Data {
   user: User;
 }
 export const handler: Handlers<Data, State> = {
-  async GET(_, ctx) {
+  async GET(_req, ctx) {
     const user = await getUserBySession(ctx.state.session ?? "");
     if (!user) return ctx.renderNotFound();
     return ctx.render({ user });

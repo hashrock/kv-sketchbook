@@ -10,7 +10,7 @@ async function remove(
   return redirect("/user/" + uid + "");
 }
 export const handler: Handlers<undefined, State> = {
-  async GET(req, ctx) {
+  async GET(_req, ctx) {
     const image = await getImage(ctx.params.uid, ctx.params.id);
     if (image === null) {
       return new Response("Not Found", { status: 404 });

@@ -18,7 +18,7 @@ async function remove(
 }
 
 export const handler: Handlers<Data, State> = {
-  async GET(req, ctx) {
+  async GET(_req, ctx) {
     const imageUrl = "/api/image/" + ctx.params.uid + "/" + ctx.params.id;
     const pageUser = await getUserById(ctx.params.uid);
     if (!pageUser) {
